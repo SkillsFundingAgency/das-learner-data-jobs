@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "SFA.DAS.LearnerData.Functions.ProcessLearners": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7261",
+      "launchBrowser": false
+    }
+  }
+}
