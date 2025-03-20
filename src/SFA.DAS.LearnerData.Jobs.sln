@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.Functions.ProcessLearners", "SFA.DAS.LearnerData.Functions.ProcessLearners\SFA.DAS.LearnerData.Functions.ProcessLearners.csproj", "{B98AB249-968C-4F1C-88E8-0C915823A54A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.Application", "SFA.DAS.LearnerData.Application\SFA.DAS.LearnerData.Application.csproj", "{9F7405B2-2014-4899-A67C-53180D7315C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B98AB249-968C-4F1C-88E8-0C915823A54A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B98AB249-968C-4F1C-88E8-0C915823A54A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B98AB249-968C-4F1C-88E8-0C915823A54A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F7405B2-2014-4899-A67C-53180D7315C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F7405B2-2014-4899-A67C-53180D7315C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F7405B2-2014-4899-A67C-53180D7315C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F7405B2-2014-4899-A67C-53180D7315C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

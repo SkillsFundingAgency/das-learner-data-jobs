@@ -30,6 +30,9 @@
 
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.DAS.LearnerData.Application\SFA.DAS.LearnerData.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
