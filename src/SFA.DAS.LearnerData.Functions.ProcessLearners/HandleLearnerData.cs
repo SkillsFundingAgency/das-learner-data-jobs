@@ -9,13 +9,13 @@ using SFA.DAS.LearnerData.Application.Events;
 
 namespace SFA.DAS.LearnerData.Functions.ProcessLearners;
 
-public class HandleAccountAddedEvent(ILearnerDataHandler handler,
-    ILogger<CreatedAccountEvent> log) : IHandleMessages<LearnerDataEvent>
-{
-    public async Task Handle(CreatedAccountEvent message, IMessageHandlerContext context)
-    {
-        log.LogInformation($"NServiceBus AccountCreated trigger function executed at: {DateTime.Now} for ${message.AccountId}:${message.Name}");
-        await handler.Handle(message);
-        log.LogInformation($"NServiceBus AccountCreated trigger function finished at: {DateTime.Now} for ${message.AccountId}:${message.Name}");
-    }
-}
+//public class HandleAccountAddedEvent(ILearnerDataHandler handler,
+//    ILogger<CreatedAccountEvent> log) : IHandleMessages<LearnerDataEvent>
+//{
+//    public async Task Handle(CreatedAccountEvent message, IMessageHandlerContext context)
+//    {
+//        log.LogInformation($"NServiceBus AccountCreated trigger function executed at: {DateTime.Now} for ${message.AccountId}:${message.Name}");
+//        await handler.Handle(message);
+//        log.LogInformation($"NServiceBus AccountCreated trigger function finished at: {DateTime.Now} for ${message.AccountId}:${message.Name}");
+//    }
+//}
