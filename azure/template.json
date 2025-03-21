@@ -38,6 +38,9 @@
         "sharedApimName": {
             "type": "string"
         },
+        "sharedApimResourceGroup": {
+            "type": "string"
+        },
         "subnetObject": {
             "type": "object"
         },
