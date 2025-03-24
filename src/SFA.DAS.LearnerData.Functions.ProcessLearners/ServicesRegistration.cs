@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using RestEase.HttpClientFactory;
+using SFA.DAS.Http.Configuration;
+using SFA.DAS.LearnerData.Application;
+using SFA.DAS.LearnerData.Application.OuterApi;
 
 namespace SFA.DAS.LearnerData.Functions.ProcessLearners;
 
@@ -16,32 +15,23 @@ public class ServicesRegistration(IServiceCollection services, IConfiguration co
     {
         services.Replace(ServiceDescriptor.Singleton(typeof(IConfiguration), configuration));
         services.AddOptions();
+        services.Configure<LearnerDataJobsOuterApiConfiguration>(configuration.GetSection(nameof(LearnerDataJobsOuterApiConfiguration)));
+        services.AddSingleton(cfg => cfg.GetService<IOptions<LearnerDataJobsOuterApiConfiguration>>().Value);
 
-        //services.Configure<ReservationsJobs>(configuration.GetSection("ReservationsJobs"));
-        //services.AddSingleton(cfg => cfg.GetService<IOptions<ReservationsJobs>>().Value);
+        services.AddSingleton<IApimClientConfiguration>(x => x.GetRequiredService<LearnerDataJobsOuterApiConfiguration>());
+        services.AddTransient<Http.MessageHandlers.DefaultHeadersHandler>();
+        services.AddTransient<Http.MessageHandlers.LoggingMessageHandler>();
+        services.AddTransient<Http.MessageHandlers.ApimHeadersHandler>();
 
-        //var config = configuration.GetSection("ReservationsJobs").Get<ReservationsJobs>();
-        //services.AddDasLogging(typeof(Program).Namespace);
+        var url = services
+            .BuildServiceProvider()
+            .GetRequiredService<LearnerDataJobsOuterApiConfiguration>()
+            .ApiBaseUrl;
 
-        //services.AddDatabaseRegistration(config, configuration["EnvironmentName"]);
-
-        //services.AddTransient<IAzureQueueService, AzureQueueService>();
-        //services.AddTransient<IAccountLegalEntitiesService, AccountLegalEntitiesService>();
-        //services.AddTransient<IAccountsService, AccountsService>();
-
-        //services.AddHttpClient<IOuterApiClient, OuterApiClient>();
-
-        //services.AddTransient<IAccountLegalEntityRepository, AccountLegalEntityRepository>();
-        //services.AddTransient<IAccountRepository, AccountRepository>();
-
-        //services.AddTransient<IAddAccountLegalEntityHandler, AddAccountLegalEntityHandler>();
-        //services.AddTransient<IRemoveLegalEntityHandler, RemoveLegalEntityHandler>();
-        //services.AddTransient<ISignedLegalAgreementHandler, SignedLegalAgreementHandler>();
-        //services.AddTransient<ILevyAddedToAccountHandler, LevyAddedToAccountHandler>();
-        //services.AddTransient<IAddAccountHandler, AddAccountHandler>();
-        //services.AddTransient<IAccountNameUpdatedHandler, AccountNameUpdatedHandler>();
-
-        //services.AddSingleton<IValidator<AddedLegalEntityEvent>, AddAccountLegalEntityValidator>();
+        services.AddRestEaseClient<ILearnerDataJobsOuterApi>(url)
+            .AddHttpMessageHandler<Http.MessageHandlers.DefaultHeadersHandler>()
+            .AddHttpMessageHandler<Http.MessageHandlers.ApimHeadersHandler>()
+            .AddHttpMessageHandler<Http.MessageHandlers.LoggingMessageHandler>();
 
         return services;
     }

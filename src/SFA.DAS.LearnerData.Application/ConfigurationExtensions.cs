@@ -1,9 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SFA.DAS.Configuration.AzureTableStorage;
 
 namespace SFA.DAS.LearnerData.Application;
@@ -39,4 +34,10 @@ public static class ConfigurationExtensions
 
         return configBuilder.Build();
     }
+
+    public static string NServiceBusConnectionString(this IConfiguration config) => config["NServiceBusConnectionString"] ?? "UseLearningEndpoint=true";
+    public static string NServiceBusLicense(this IConfiguration config) => config["NServiceBusLicense"];
+    public static string NServiceBusFullNamespace(this IConfiguration config) => config["AzureWebJobsServiceBus:fullyQualifiedNamespace"];
+    public static string NServiceBusSASConnectionString(this IConfiguration config) => config["AzureWebJobsServiceBus"];
+
 }
