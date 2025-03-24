@@ -82,7 +82,7 @@
         "resourceGroupName": "[concat(variables('resourceNamePrefix'), '-rg')]",
         "functionAppName": "[concat(variables('resourceNamePrefix'), '-fa')]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
-        "configNames": "SFA.DAS.LearnerData"
+        "configNames": "SFA.DAS.LearnerData.Jobs"
     },
     "resources": [
         {
