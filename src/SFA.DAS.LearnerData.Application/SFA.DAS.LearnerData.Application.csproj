@@ -14,10 +14,10 @@
     <PackageReference Include="NServiceBus.AzureFunctions.Worker.ServiceBus" Version="6.0.0" />
     <PackageReference Include="NServiceBus.Extensions.Hosting" Version="3.0.1" />
     <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="4.1.0" />
-    <PackageReference Include="SFA.DAS.Configuration.AzureTableStorage" Version="3.0.84" />
+    <PackageReference Include="SFA.DAS.Configuration.AzureTableStorage" Version="17.1.113" />
             <PackageReference Include="RestEase" Version="1.6.4" />
     <PackageReference Include="RestEase.HttpClientFactory" Version="1.6.4" />
-    <PackageReference Include="SFA.DAS.Http" Version="3.2.62" />
+    <PackageReference Include="SFA.DAS.Http" Version="3.2.69" />
 
   </ItemGroup>
 
