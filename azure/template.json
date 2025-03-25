@@ -47,6 +47,9 @@
         "sharedServiceBusName": {
             "type": "string"
         },
+        "sharedServiceBusFqdn": {
+            "type": "string"
+        }
         "subnetServiceEndpointList": {
             "type": "array"
         },
@@ -220,6 +223,10 @@
                                 {
                                     "name": "ConfigurationStorageConnectionString",
                                     "value": "[parameters('configurationStorageConnectionString')]"
+                                },
+                                {
+                                    "name": "AzureWebJobsServiceBus__fullyQualifiedNamespace",
+                                    "value": "[parameters('sharedServiceBusFqdn')]"
                                 },
                                 {
                                     "name": "ConfigNames",
