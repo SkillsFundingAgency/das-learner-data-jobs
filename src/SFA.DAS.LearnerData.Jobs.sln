@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{DB76
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.MockServer", "SFA.DAS.LearnerData.MockServer\SFA.DAS.LearnerData.MockServer.csproj", "{8B3C37D8-7C93-49B9-AED2-A716958791AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.Functions.ProcessLearners.UnitTests", "SFA.DAS.LearnerData.Functions.ProcessLearners.UnitTests\SFA.DAS.LearnerData.Functions.ProcessLearners.UnitTests.csproj", "{41587618-1427-43BB-9227-7A42F012588A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{8B3C37D8-7C93-49B9-AED2-A716958791AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B3C37D8-7C93-49B9-AED2-A716958791AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B3C37D8-7C93-49B9-AED2-A716958791AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41587618-1427-43BB-9227-7A42F012588A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41587618-1427-43BB-9227-7A42F012588A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41587618-1427-43BB-9227-7A42F012588A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41587618-1427-43BB-9227-7A42F012588A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +48,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3A32F17C-5842-405C-808D-CA1CB68C4285} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
 		{8B3C37D8-7C93-49B9-AED2-A716958791AC} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
+		{41587618-1427-43BB-9227-7A42F012588A} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
 	EndGlobalSection
 EndGlobal
