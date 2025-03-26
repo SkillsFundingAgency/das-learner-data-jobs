@@ -1,0 +1,68 @@
+﻿using Microsoft.Extensions.Configuration;
+using SFA.DAS.LearnerData.Application.Events;
+using SFA.DAS.LearnerData.Application.NServiceBus;
+
+const string queueName = "SFA.DAS.TrackProgress";
+
+IConfiguration config = new ConfigurationBuilder()
+    .AddEnvironmentVariables()
+    .AddJsonFile("appsettings.development.json", optional: false)
+    .Build();
+
+var connectionString = config["NServiceBusConnection"];
+if (connectionString is null)
+    throw new NotSupportedException("NServiceBusConnection should contain ServiceBus connection string");
+
+
+var endpointConfiguration = new EndpointConfiguration("SFA.DAS.TrackProgress");
+endpointConfiguration.EnableInstallers();
+endpointConfiguration.UseMessageConventions();
+endpointConfiguration.UseNewtonsoftJsonSerializer();
+
+endpointConfiguration.SendOnly();
+
+var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
+transport.ConnectionString(connectionString);
+
+//var transport = new AzureServiceBusTransport(connectionString, TopicTopology.Default);
+//endpointConfiguration.UseTransport(transport);
+
+var endpointInstance = await Endpoint.Start(endpointConfiguration)
+    .ConfigureAwait(false);
+
+while (true)
+{
+    Console.Clear();
+    Console.WriteLine("To Publish an Event please select the option...");
+    Console.WriteLine("1. Publish LearnerDataEvent");
+    Console.WriteLine("X. Exit");
+
+    var choice = Console.ReadLine()?.ToLower();
+    switch (choice)
+    {
+        case "1":
+            await PublishMessage(endpointInstance, new LearnerDataEvent { ULN = 1234567890 });
+            break;
+        case "x":
+            await endpointInstance.Stop();
+            return;
+    }
+}
+
+async Task PublishMessage(IMessageSession messageSession, object message)
+{
+    await messageSession.Publish(message);
+
+    Console.WriteLine("Message published.");
+    Console.WriteLine("Press enter to continue");
+    Console.ReadLine();
+}
+
+async Task SendMessage(IMessageSession messageSession, object message)
+{
+    await messageSession.Send(message);
+
+    Console.WriteLine("Message sent.");
+    Console.WriteLine("Press enter to continue");
+    Console.ReadLine();
+}

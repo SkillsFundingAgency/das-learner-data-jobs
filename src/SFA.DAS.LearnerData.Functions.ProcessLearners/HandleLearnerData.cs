@@ -4,7 +4,7 @@ using SFA.DAS.LearnerData.Application.OuterApi;
 
 namespace SFA.DAS.LearnerData.Functions.ProcessLearners;
 
-public class HandleAccountAddedEvent(ILearnerDataJobsOuterApi outerApi, ILogger<HandleAccountAddedEvent> log) : IHandleMessages<LearnerDataEvent>
+public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<HandleLearnerDataEvent> log) : IHandleMessages<LearnerDataEvent>
 {
     public async Task Handle(LearnerDataEvent message, IMessageHandlerContext context)
     {
@@ -27,7 +27,7 @@ public class HandleAccountAddedEvent(ILearnerDataJobsOuterApi outerApi, ILogger<
             PlannedOTJTrainingHours = message.PlannedOTJTrainingHours,
             StandardCode = message.StandardCode
         };
-        
+
         await outerApi.AddLearner(request);
         log.LogTrace("NServiceBus sent LearnerDataRequest");
     }

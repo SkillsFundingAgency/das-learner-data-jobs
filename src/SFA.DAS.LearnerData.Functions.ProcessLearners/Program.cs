@@ -9,7 +9,7 @@ using SFA.DAS.LearnerData.Functions.ProcessLearners;
 [assembly: NServiceBusTriggerFunction(AzureFunctionsQueueNames.ProcessLearnersQueue)]
 
 var host = new HostBuilder()
-    .ConfigureFunctionsWebApplication()
+    .ConfigureFunctionsWorkerDefaults()
     .ConfigureAppConfiguration(builder => builder.BuildDasConfiguration())
     .ConfigureNServiceBus(AzureFunctionsQueueNames.ProcessLearnersQueue)
     .ConfigureServices((context, services) =>
@@ -29,10 +29,5 @@ host.Run();
 var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
-
-// Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4.
-// builder.Services
-//     .AddApplicationInsightsTelemetryWorkerService()
-//     .ConfigureFunctionsApplicationInsights();
 
 builder.Build().Run();
