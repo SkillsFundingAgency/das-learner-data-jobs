@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SFA.DAS.Configuration.AzureTableStorage;
 
-namespace SFA.DAS.LearnerData.Application;
+namespace SFA.DAS.LearnerData.Functions.ProcessLearners;
 
 public static class ConfigurationExtensions
 {
