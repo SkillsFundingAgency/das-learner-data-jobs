@@ -1,9 +1,6 @@
-﻿using RestEase;
-
-namespace SFA.DAS.LearnerData.Application.OuterApi;
+﻿namespace SFA.DAS.LearnerData.Application.OuterApi;
 
 public interface ILearnerDataJobsOuterApi
 {
-    [Post("/learners")]
-    Task AddLearner([Body] LearnerDataRequest message);
+    Task AddLearner(LearnerDataRequest message);
 }

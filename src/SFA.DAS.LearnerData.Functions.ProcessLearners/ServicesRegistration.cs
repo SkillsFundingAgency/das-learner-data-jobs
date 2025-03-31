@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using RestEase.HttpClientFactory;
 using SFA.DAS.Http.Configuration;
 using SFA.DAS.LearnerData.Application;
 using SFA.DAS.LearnerData.Application.OuterApi;
@@ -23,12 +22,7 @@ public class ServicesRegistration(IServiceCollection services, IConfiguration co
         services.AddTransient<Http.MessageHandlers.LoggingMessageHandler>();
         services.AddTransient<Http.MessageHandlers.ApimHeadersHandler>();
 
-        var url = services
-            .BuildServiceProvider()
-            .GetRequiredService<LearnerDataJobsOuterApiConfiguration>()
-            .ApiBaseUrl;
-
-        services.AddRestEaseClient<ILearnerDataJobsOuterApi>(url)
+        services.AddHttpClient<ILearnerDataJobsOuterApi, LearnerDataJobsOuterApi>()
             .AddHttpMessageHandler<Http.MessageHandlers.DefaultHeadersHandler>()
             .AddHttpMessageHandler<Http.MessageHandlers.ApimHeadersHandler>()
             .AddHttpMessageHandler<Http.MessageHandlers.LoggingMessageHandler>();
