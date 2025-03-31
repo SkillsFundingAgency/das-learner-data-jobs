@@ -21,9 +21,8 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
 
     public Task AddLearner(LearnerDataRequest message)
     {
-        
         var requestMessage = new HttpRequestMessage(HttpMethod.Post, "learners");
-        _logger.LogTrace("Adding learner data to inner API");
+        _logger.LogTrace("Sending learner data to inner API");
         return _httpClient.SendAsync(requestMessage);
     }
 }
