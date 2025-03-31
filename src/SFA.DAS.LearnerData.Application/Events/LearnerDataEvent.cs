@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.LearnerData.Application.Events;
+﻿namespace SFA.DAS.LearnerData.Events;
 
 public class LearnerDataEvent
 {
