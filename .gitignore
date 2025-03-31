@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 /src/SFA.DAS.LearnerData.TestMessagePublisher/appsettings.development.json
 /src/SFA.DAS.LearnerData.Functions.ProcessLearners/local.settings.json
+*.ncrunchsolution
