@@ -2,8 +2,6 @@
 using SFA.DAS.LearnerData.Application.NServiceBus;
 using SFA.DAS.LearnerData.Events;
 
-const string queueName = "SFA.DAS.TrackProgress";
-
 IConfiguration config = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .AddJsonFile("appsettings.development.json", optional: false)
