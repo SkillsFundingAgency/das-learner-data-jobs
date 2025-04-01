@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SFA.DAS.LearnerData.Application.Events;
 using SFA.DAS.LearnerData.Application.NServiceBus;
+using SFA.DAS.LearnerData.Events;
 
 const string queueName = "SFA.DAS.TrackProgress";
 
@@ -14,7 +14,7 @@ if (connectionString is null)
     throw new NotSupportedException("NServiceBusConnection should contain ServiceBus connection string");
 
 
-var endpointConfiguration = new EndpointConfiguration("SFA.DAS.TrackProgress");
+var endpointConfiguration = new EndpointConfiguration("SFA.DAS.LearnerDataJobs");
 endpointConfiguration.EnableInstallers();
 endpointConfiguration.UseMessageConventions();
 endpointConfiguration.UseNewtonsoftJsonSerializer();

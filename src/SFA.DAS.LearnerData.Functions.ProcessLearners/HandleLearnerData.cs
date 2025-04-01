@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using SFA.DAS.LearnerData.Application.Events;
 using SFA.DAS.LearnerData.Application.OuterApi;
+using SFA.DAS.LearnerData.Events;
 
 namespace SFA.DAS.LearnerData.Functions.ProcessLearners;
 
