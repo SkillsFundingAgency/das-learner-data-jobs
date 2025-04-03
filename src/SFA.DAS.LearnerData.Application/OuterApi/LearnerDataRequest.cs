@@ -4,8 +4,8 @@ public class LearnerDataRequest
 {
     public long ULN { get; set; }
     public long UKPRN { get; set; }
-    public string Firstname { get; set; }
-    public string Lastname { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
     public string Email { get; set; }
     public DateTime DoB { get; set; }
     public DateTime StartDate { get; set; }
@@ -16,5 +16,9 @@ public class LearnerDataRequest
     public bool IsFlexJob { get; set; }
     public int PlannedOTJTrainingHours { get; set; }
     public int StandardCode { get; set; }
+    public Guid CorrelationId { get; set; }
+    public DateTime ReceivedOn { get; set; }
+    public int AcademicYear { get; set; }
+
 }
 

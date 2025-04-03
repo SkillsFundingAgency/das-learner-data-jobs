@@ -2,5 +2,5 @@
 
 public interface ILearnerDataJobsOuterApi
 {
-    Task AddLearner(LearnerDataRequest message);
+    Task AddOrUpdateLearner(LearnerDataRequest message);
 }

@@ -13,8 +13,8 @@ public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<H
         {
             ULN = message.ULN,
             UKPRN = message.UKPRN,
-            Firstname = message.Firstname,
-            Lastname = message.Lastname,
+            FirstName = message.FirstName,
+            LastName = message.LastName,
             Email = message.Email,
             DoB = message.DoB,
             StartDate = message.StartDate,
@@ -25,10 +25,13 @@ public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<H
             AgreementId = message.AgreementId,
             IsFlexJob = message.IsFlexJob,
             PlannedOTJTrainingHours = message.PlannedOTJTrainingHours,
-            StandardCode = message.StandardCode
+            StandardCode = message.StandardCode,
+            CorrelationId = message.CorrelationId,
+            ReceivedOn = message.ReceivedOn,
+            AcademicYear = message.AcademicYear
         };
 
-        await outerApi.AddLearner(request);
+        await outerApi.AddOrUpdateLearner(request);
         log.LogTrace("NServiceBus sent LearnerDataRequest");
     }
 }

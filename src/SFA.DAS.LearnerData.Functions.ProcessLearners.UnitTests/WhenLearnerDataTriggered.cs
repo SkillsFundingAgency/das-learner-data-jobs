@@ -18,7 +18,7 @@ public class WhenLearnerDataTriggered
     {
         var request = new LearnerDataRequest();
 
-        api.Setup(x => x.AddLearner(It.IsAny<LearnerDataRequest>())).Callback((LearnerDataRequest p) =>
+        api.Setup(x => x.AddOrUpdateLearner(It.IsAny<LearnerDataRequest>())).Callback((LearnerDataRequest p) =>
         {
             request = p;
         });
