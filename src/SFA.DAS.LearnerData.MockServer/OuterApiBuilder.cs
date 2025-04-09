@@ -36,8 +36,8 @@ public class OuterApiBuilder
     {
         _server.Given(
                 Request.Create()
-                    .WithPath("/learners")
-                    .UsingPost()
+                    .WithPath("providers/*/learners")
+                    .UsingPut()
             )
             .RespondWith(
                 Response.Create()

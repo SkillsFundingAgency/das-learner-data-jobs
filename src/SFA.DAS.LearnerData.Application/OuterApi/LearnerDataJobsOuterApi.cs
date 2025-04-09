@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Azure.Core;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace SFA.DAS.LearnerData.Application.OuterApi;
 
@@ -21,7 +24,10 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
 
     public Task AddOrUpdateLearner(LearnerDataRequest message)
     {
-        var requestMessage = new HttpRequestMessage(HttpMethod.Put, "learners");
+        var requestMessage = new HttpRequestMessage(HttpMethod.Put, $"providers/{message.UKPRN}/learners")
+        {
+            Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
+        };
         _logger.LogTrace("Sending learner data to inner API");
         return _httpClient.SendAsync(requestMessage);
     }
