@@ -22,13 +22,18 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         _logger = logger;
     }
 
-    public Task AddOrUpdateLearner(LearnerDataRequest message)
+    public async Task AddOrUpdateLearner(LearnerDataRequest message)
     {
         var requestMessage = new HttpRequestMessage(HttpMethod.Put, $"providers/{message.UKPRN}/learners")
         {
             Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
         };
         _logger.LogTrace("Sending learner data to inner API");
-        return _httpClient.SendAsync(requestMessage);
+        var response = await _httpClient.SendAsync(requestMessage);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new HttpRequestException("Error status code returned when adding or updating learner data", null, response.StatusCode);
+        }
     }
 }
