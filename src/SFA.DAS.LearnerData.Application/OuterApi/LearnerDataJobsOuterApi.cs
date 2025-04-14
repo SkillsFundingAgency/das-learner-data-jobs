@@ -33,7 +33,8 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new HttpRequestException("Error status code returned when adding or updating learner data", null, response.StatusCode);
+            _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
+            throw new HttpRequestException("Unsuccessful status code returned when adding or updating learner data", null, response.StatusCode);
         }
     }
 }
