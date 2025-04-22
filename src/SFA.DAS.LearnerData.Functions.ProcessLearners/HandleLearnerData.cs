@@ -26,6 +26,7 @@ public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<H
             IsFlexJob = message.IsFlexJob,
             PlannedOTJTrainingHours = message.PlannedOTJTrainingHours,
             StandardCode = message.StandardCode,
+            ConsumerReference = message.ConsumerReference,
             CorrelationId = message.CorrelationId,
             ReceivedOn = message.ReceivedOn,
             AcademicYear = message.AcademicYear
