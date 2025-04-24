@@ -6,11 +6,11 @@ public class LearnerDataEvent
     public long UKPRN { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string Email { get; set; }
+    public string? Email { get; set; }
     public DateTime DoB { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime PlannedEndDate { get; set; }
-    public int PercentageLearningToBeDelivered { get; set; }
+    public int? PercentageLearningToBeDelivered { get; set; }
     public int EpaoPrice { get; set; }
     public int TrainingPrice { get; set; }
     public string AgreementId { get; set; }
