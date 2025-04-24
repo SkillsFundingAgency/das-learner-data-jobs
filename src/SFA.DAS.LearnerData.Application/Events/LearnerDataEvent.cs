@@ -19,6 +19,6 @@ public class LearnerDataEvent
     public int StandardCode { get; set; }
     public string ConsumerReference { get; set; }
     public Guid CorrelationId { get; set; }
-    public DateTime ReceivedOn { get; set; }
+    public DateTime ReceivedDate { get; set; }
     public int AcademicYear { get; set; }
 }

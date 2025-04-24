@@ -39,7 +39,7 @@ while (true)
             await PublishMessage(endpointInstance,
                 new LearnerDataEvent
                 {
-                    ULN = 1234567890, AcademicYear = 2425, CorrelationId = new Guid(), ReceivedOn = DateTime.Now, DoB = DateTime.Today.AddYears(-20),
+                    ULN = 1234567890, AcademicYear = 2425, CorrelationId = new Guid(), ReceivedDate = DateTime.Now, DoB = DateTime.Today.AddYears(-20),
                     EpaoPrice = 100, FirstName = "Peter", LastName = "Pan", StartDate = DateTime.Today, PlannedEndDate = DateTime.Now.AddMonths(-1).AddYears(2),
                     TrainingPrice = 20000
                 });
