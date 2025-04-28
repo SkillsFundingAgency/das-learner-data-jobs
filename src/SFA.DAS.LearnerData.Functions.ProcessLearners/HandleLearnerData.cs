@@ -23,7 +23,7 @@ public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<H
             EpaoPrice = message.EpaoPrice,
             TrainingPrice = message.TrainingPrice,
             AgreementId = message.AgreementId,
-            IsFlexJob = message.IsFlexJob,
+            IsFlexiJob = message.IsFlexiJob,
             PlannedOTJTrainingHours = message.PlannedOTJTrainingHours,
             StandardCode = message.StandardCode,
             ConsumerReference = message.ConsumerReference,
