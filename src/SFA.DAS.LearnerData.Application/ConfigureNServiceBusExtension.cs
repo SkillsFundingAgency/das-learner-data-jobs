@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using SFA.DAS.LearnerData.Application.NServiceBus;
 
-namespace SFA.DAS.LearnerData.Functions.Approvals;
+namespace SFA.DAS.LearnerData.Application;
 
 public static class ConfigureNServiceBusExtension
 {
