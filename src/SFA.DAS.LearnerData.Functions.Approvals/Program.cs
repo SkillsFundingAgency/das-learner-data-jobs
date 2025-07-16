@@ -6,7 +6,7 @@ using SFA.DAS.LearnerData.Application;
 using SFA.DAS.LearnerData.Application.NServiceBus;
 using SFA.DAS.LearnerData.Functions.Approvals;
 
-[assembly: NServiceBusTriggerFunction(AzureFunctionsQueueNames.ProcessLearnersQueue)]
+[assembly: NServiceBusTriggerFunction(AzureFunctionsQueueNames.ApprovalsQueue)]
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
