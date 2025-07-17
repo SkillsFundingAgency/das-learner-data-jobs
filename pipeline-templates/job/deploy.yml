@@ -57,6 +57,6 @@ jobs:
             DeploymentPackagePath: $(Pipeline.Workspace)/${{ parameters.SolutionBaseName }}.Functions.ProcessLearners/${{ parameters.SolutionBaseName }}.Functions.ProcessLearners.zip
         - template: azure-pipelines-templates/deploy/step/function-deploy.yml@das-platform-building-blocks
           parameters:
-          ServiceConnection: ${{ parameters.ServiceConnection }}
-          FunctionAppName: $(ApprovalsFunctionAppName)
-          DeploymentPackagePath: $(Pipeline.Workspace)/${{ parameters.SolutionBaseName }}.Functions.Approvals/${{ parameters.SolutionBaseName }}.Functions.Approvals.zip
+            ServiceConnection: ${{ parameters.ServiceConnection }}
+            FunctionAppName: $(ApprovalsFunctionAppName)
+            DeploymentPackagePath: $(Pipeline.Workspace)/${{ parameters.SolutionBaseName }}.Functions.Approvals/${{ parameters.SolutionBaseName }}.Functions.Approvals.zip
