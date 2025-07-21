@@ -14,16 +14,24 @@ jobs:
   - template: azure-pipelines-templates/build/step/gitversion.yml@das-platform-building-blocks
 
   - template: azure-pipelines-templates/build/step/app-build.yml@das-platform-building-blocks
-    parameters:
-      ContinueOnVulnerablePackageScanError: true
 
   - task: DotNetCoreCLI@2
-    displayName: Publish - dotnet publish ${{ parameters.SolutionBaseName }}
+    displayName: Publish - dotnet publish ${{ parameters.SolutionBaseName }}.Functions.ProcessLearners
     inputs:
       command: publish
-      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
+      publishWebProjects: false
       projects: src/${{ parameters.SolutionBaseName }}.Functions.ProcessLearners/${{ parameters.SolutionBaseName }}.Functions.ProcessLearners.csproj
-      arguments: -o $(build.artifactstagingdirectory)/publish -c ${{ parameters.BuildConfiguration }} --no-build
+      arguments: -o $(build.artifactstagingdirectory)/process-publish -c ${{ parameters.BuildConfiguration }} --no-build
+      modifyOutputPath: true
+      zipAfterPublish: true
+
+  - task: DotNetCoreCLI@2
+    displayName: Publish - dotnet publish ${{ parameters.SolutionBaseName }}.Functions.Approvals
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: src/${{ parameters.SolutionBaseName }}.Functions.Approvals/${{ parameters.SolutionBaseName }}.Functions.Approvals.csproj
+      arguments: -o $(build.artifactstagingdirectory)/approvals-publish -c ${{ parameters.BuildConfiguration }} --no-build
       modifyOutputPath: true
       zipAfterPublish: true
 
@@ -36,7 +44,13 @@ jobs:
       OverWrite: true
 
   - task: PublishPipelineArtifact@1
-    displayName: Publish Build Artifact
+    displayName: Publish Build Artifact - ProcessLearners
     inputs:
-      targetPath: $(build.artifactstagingdirectory)/publish
+      targetPath: $(build.artifactstagingdirectory)/process-publish
       artifactName: ${{ parameters.SolutionBaseName }}.Functions.ProcessLearners
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish Build Artifact - Approvals
+    inputs:
+      targetPath: $(build.artifactstagingdirectory)/approvals-publish
+      artifactName: ${{ parameters.SolutionBaseName }}.Functions.Approvals
