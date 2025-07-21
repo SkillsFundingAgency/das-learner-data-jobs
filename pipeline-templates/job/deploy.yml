@@ -1,14 +1,7 @@
 parameters:
-  - name: ServiceConnection
-  - name: SolutionBaseName
-  - name: Environment
-  - name: FunctionApps
-    type: object
-    default:
-      - Name: $(FunctionAppName)
-        ProjectName: ProcessLearners
-      - Name: $(ApprovalsFunctionAppName)
-        ProjectName: Approvals
+  ServiceConnection:
+  SolutionBaseName:
+  Environment:
 
 jobs:
 - deployment: DeployFunctionApp
@@ -25,7 +18,6 @@ jobs:
             EnvironmentId: $(Environment.Id)
             PipelineName: $(Build.DefinitionName)
             RunId: $(Build.BuildId)
-        
         - template: azure-pipelines-templates/deploy/step/arm-deploy.yml@das-platform-building-blocks
           parameters:
             ServiceConnection: ${{ parameters.ServiceConnection }}
@@ -39,7 +31,6 @@ jobs:
               LoggingRedisConnectionString: $(LoggingRedisConnectionString)
               ConfigurationStorageConnectionString: $(ConfigurationStorageConnectionString)
               SharedStorageAccountConnectionString: $(SharedStorageAccountConnectionString)
-
         - template: azure-pipelines-templates/deploy/step/get-apim-subscription-key.yml@das-platform-building-blocks
           parameters:
             ServiceConnection: ${{ parameters.ServiceConnection }}
@@ -48,7 +39,6 @@ jobs:
             SubscriptionId: $(FunctionAppName)
             PipelineVariableName: LearnerDataJobsOuterApimSubscriptionKey
             IsMultiRepoCheckout: true
-
         - template: azure-pipelines-templates/deploy/step/generate-config.yml@das-platform-building-blocks
           parameters:
             EnvironmentName: $(EnvironmentName)
@@ -60,10 +50,8 @@ jobs:
             TableName: Configuration
             ConfigurationSecrets:
               LearnerDataJobsOuterApimSubscriptionKey: $(LearnerDataJobsOuterApimSubscriptionKey)
-
-        - ${{ each FunctionApp in parameters.FunctionApps }}:
-          - template: azure-pipelines-templates/deploy/step/function-deploy.yml@das-platform-building-blocks
-            parameters:
-              ServiceConnection: ${{ parameters.ServiceConnection }}
-              FunctionAppName: ${{ FunctionApp.Name }}
-              DeploymentPackagePath: $(Pipeline.Workspace)/${{ parameters.SolutionBaseName }}.Functions.${{ FunctionApp.ProjectName }}/${{ parameters.SolutionBaseName }}.Functions.${{ FunctionApp.ProjectName }}.zip
+        - template: azure-pipelines-templates/deploy/step/function-deploy.yml@das-platform-building-blocks
+          parameters:
+            ServiceConnection: ${{ parameters.ServiceConnection }}
+            FunctionAppName: $(FunctionAppName)
+            DeploymentPackagePath: $(Pipeline.Workspace)/${{ parameters.SolutionBaseName }}.Functions.ProcessLearners/${{ parameters.SolutionBaseName }}.Functions.ProcessLearners.zip
