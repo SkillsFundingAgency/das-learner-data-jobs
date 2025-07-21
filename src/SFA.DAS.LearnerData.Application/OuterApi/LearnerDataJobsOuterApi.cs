@@ -36,4 +36,20 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
             throw new HttpRequestException("Unsuccessful status code returned when adding or updating learner data", null, response.StatusCode);
         }
     }
+
+    public async Task PatchApprenticeshipId(long providerId, long learnerDataId, PatchLearnerDataApprenticeshipIdRequest message)
+    {
+        var requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"providers/{providerId}/learners/{learnerDataId}/apprenticeshipId")
+        {
+            Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
+        };
+        _logger.LogTrace("Sending ApprenticeshipId Patch to outer API");
+        var response = await _httpClient.SendAsync(requestMessage);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
+            throw new HttpRequestException("Unsuccessful status code returned when updating ApprenticeshipId on learner data record", null, response.StatusCode);
+        }
+    }
 }

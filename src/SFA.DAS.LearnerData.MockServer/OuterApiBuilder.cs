@@ -36,7 +36,7 @@ public class OuterApiBuilder
     {
         _server.Given(
                 Request.Create()
-                    .WithPath("providers/*/learners")
+                    .WithPath("/providers/*/learners")
                     .UsingPut()
             )
             .RespondWith(
@@ -45,5 +45,18 @@ public class OuterApiBuilder
 
         return this;
     }
-}
 
+    public OuterApiBuilder WithPatchApprenticeshipIdLearnerEndpoint()
+    {
+        _server.Given(
+                Request.Create()
+                    .WithPath("/providers/*/learners/*/apprenticeshipId")
+                    .UsingPatch()
+            )
+            .RespondWith(
+                Response.Create()
+                    .WithStatusCode(HttpStatusCode.OK));
+
+        return this;
+    }
+}
