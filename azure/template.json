@@ -91,7 +91,7 @@
         "resourceNamePrefix": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
         "resourceGroupName": "[concat(variables('resourceNamePrefix'), '-rg')]",
         "functionAppName": "[concat(variables('resourceNamePrefix'), '-fa')]",
-        "functionAppName2": "[concat(variables('resourceNamePrefix'), '-approvals-fa')]",
+        "functionAppName2": "[toLower(concat('das-', parameters('resourceEnvironmentName'), '-approvals-fa')]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
         "configNames": "SFA.DAS.LearnerData.Jobs"
     },
