@@ -91,7 +91,7 @@
         "resourceNamePrefix": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
         "resourceGroupName": "[concat(variables('resourceNamePrefix'), '-rg')]",
         "functionAppName": "[concat(variables('resourceNamePrefix'), '-fa')]",
-        "functionAppName2": "[toLower(concat('das-', parameters('resourceEnvironmentName'), '-approvals-fa'))]",
+        "functionAppNameApprovals": "[concat(variables('resourceNamePrefix'), '-approvals')]",
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
         "configNames": "SFA.DAS.LearnerData.Jobs"
     },
@@ -193,7 +193,7 @@
         },
         {
             "apiVersion": "2021-04-01",
-            "name": "[concat(variables('functionAppName2'), '-application-insights-', parameters('utcValue'))]",
+            "name": "[concat(variables('functionAppNameApprovals'), '-application-insights-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[variables('resourceGroupName')]",
             "properties": {
@@ -204,10 +204,10 @@
                 },
                 "parameters": {
                     "appInsightsName": {
-                        "value": "[variables('functionAppName2')]"
+                        "value": "[variables('functionAppNameApprovals')]"
                     },
                     "attachedService": {
-                        "value": "[variables('functionAppName2')]"
+                        "value": "[variables('functionAppNameApprovals')]"
                     },
                     "logAnalyticsWorkspaceId": {
                         "value": "[resourceId(parameters('logAnalyticsSubscriptionId'),parameters('sharedManagementResourceGroup'),'Microsoft.OperationalInsights/workspaces',parameters('logAnalyticsWorkspaceName'))]"
@@ -314,7 +314,7 @@
         },
          {
             "apiVersion": "2021-04-01",
-            "name": "[concat(variables('functionAppName2'), '-', parameters('utcValue'))]",
+            "name": "[concat(variables('functionAppNameApprovals'), '-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[variables('resourceGroupName')]",
             "properties": {
@@ -325,7 +325,7 @@
                 },
                 "parameters": {
                     "functionAppName": {
-                        "value": "[variables('functionAppName2')]"
+                        "value": "[variables('functionAppNameApprovals')]"
                     },
                     "appServicePlanName": {
                         "value": "[variables('appServicePlanName')]"
@@ -364,7 +364,7 @@
                                 },
                                 {
                                     "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                                    "value": "[reference(concat(variables('functionAppName2'), '-application-insights-', parameters('utcValue'))).outputs.ConnectionString.value]"
+                                    "value": "[reference(concat(variables('functionAppNameApprovals'), '-application-insights-', parameters('utcValue'))).outputs.ConnectionString.value]"
                                 },
                                 {
                                     "name": "AzureWebJobsStorage",
@@ -432,7 +432,7 @@
         },
         {
             "apiVersion": "2020-06-01",
-            "name": "[concat(variables('functionAppName2'), '-apim-subscription-', parameters('utcValue'))]",
+            "name": "[concat(variables('functionAppNameApprovals'), '-apim-subscription-', parameters('utcValue'))]",
             "resourceGroup": "[parameters('sharedApimResourceGroup')]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -446,7 +446,7 @@
                         "value": "[parameters('sharedApimName')]"
                     },
                     "subscriptionName": {
-                        "value": "[variables('functionAppName2')]"
+                        "value": "[variables('functionAppNameApprovals')]"
                     },
                     "subscriptionScope": {
                         "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('sharedApimResourceGroup'), '/providers/Microsoft.ApiManagement/service/', parameters('sharedApimName'), '/products/LearnerDataJobsOuterApi')]"
@@ -480,7 +480,7 @@
         },
         {
             "apiVersion": "2021-04-01",
-            "name": "[concat('role-assignment-', variables('functionAppName2'), '-', parameters('utcValue'))]",
+            "name": "[concat('role-assignment-', variables('functionAppNameApprovals'), '-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "properties": {
@@ -491,7 +491,7 @@
                 },
                 "parameters": {
                     "principalId": {
-                        "value": "[reference(concat(variables('functionAppName2'), '-', parameters('utcValue'))).outputs.managedServiceIdentityId.value]"
+                        "value": "[reference(concat(variables('functionAppNameApprovals'), '-', parameters('utcValue'))).outputs.managedServiceIdentityId.value]"
                     },
                     "assignmentType": {
                         "value": "ServiceBusOwner"
@@ -525,7 +525,7 @@
         },
         {
             "apiVersion": "2022-09-01",
-            "name": "[concat(variables('functionAppName2'), '-cors-policies-', parameters('utcValue'))]",
+            "name": "[concat(variables('functionAppNameApprovals'), '-cors-policies-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[variables('resourceGroupName')]",
             "properties": {
@@ -536,12 +536,12 @@
                 },
                 "parameters": {
                     "functionAppName": {
-                        "value": "[variables('functionAppName2')]"
+                        "value": "[variables('functionAppNameApprovals')]"
                     }
                 }
             },
             "dependsOn": [
-                "[concat(variables('functionAppName2'), '-', parameters('utcValue'))]"
+                "[concat(variables('functionAppNameApprovals'), '-', parameters('utcValue'))]"
             ]
         }
     ],
@@ -554,9 +554,9 @@
             "type": "string",
             "value": "[variables('functionAppName')]"
         },
-        "FunctionAppName2": {
+        "functionAppNameApprovals": {
             "type": "string",
-            "value": "[variables('functionAppName2')]"
+            "value": "[variables('functionAppNameApprovals')]"
         }
     }
 }

@@ -58,5 +58,5 @@ jobs:
         - template: azure-pipelines-templates/deploy/step/function-deploy.yml@das-platform-building-blocks
           parameters:
             ServiceConnection: ${{ parameters.ServiceConnection }}
-            FunctionAppName: $(FunctionAppName2)
+            FunctionAppName: $(functionAppNameApprovals)
             DeploymentPackagePath: $(Pipeline.Workspace)/${{ parameters.SolutionBaseName }}/SFA.DAS.LearnerData.Functions.Approvals.zip
