@@ -166,7 +166,7 @@
         },
         {
             "apiVersion": "2021-04-01",
-            "name": "[concat(variables('functionAppName'), '-application-insights-', parameters('utcValue'))]",
+            "name": "[concat(variables('functionAppName'), '-app-insights-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[variables('resourceGroupName')]",
             "properties": {
@@ -193,7 +193,7 @@
         },
         {
             "apiVersion": "2021-04-01",
-            "name": "[concat(variables('functionAppNameApprovals'), '-application-insights-', parameters('utcValue'))]",
+            "name": "[concat(variables('functionAppNameApprovals'), '-app-insights-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[variables('resourceGroupName')]",
             "properties": {
@@ -270,7 +270,7 @@
                                 },
                                 {
                                     "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                                    "value": "[reference(concat(variables('functionAppName'), '-application-insights-', parameters('utcValue'))).outputs.ConnectionString.value]"
+                                    "value": "[reference(concat(variables('functionAppName'), '-app-insights-', parameters('utcValue'))).outputs.ConnectionString.value]"
                                 },
                                 {
                                     "name": "AzureWebJobsStorage",
@@ -364,7 +364,7 @@
                                 },
                                 {
                                     "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                                    "value": "[reference(concat(variables('functionAppNameApprovals'), '-application-insights-', parameters('utcValue'))).outputs.ConnectionString.value]"
+                                    "value": "[reference(concat(variables('functionAppNameApprovals'), '-app-insights-', parameters('utcValue'))).outputs.ConnectionString.value]"
                                 },
                                 {
                                     "name": "AzureWebJobsStorage",
