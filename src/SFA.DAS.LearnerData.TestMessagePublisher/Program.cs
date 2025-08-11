@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.LearnerData.Application.NServiceBus;
 using SFA.DAS.LearnerData.Events;
 
@@ -30,6 +31,7 @@ while (true)
     Console.Clear();
     Console.WriteLine("To Publish an Event please select the option...");
     Console.WriteLine("1. Publish LearnerDataEvent");
+    Console.WriteLine("1. Publish ApprenticeshipCreatedEvent");
     Console.WriteLine("X. Exit");
 
     var choice = Console.ReadLine()?.ToLower();
@@ -42,6 +44,13 @@ while (true)
                     ULN = 1234567890, AcademicYear = 2425, CorrelationId = new Guid(), ReceivedDate = DateTime.Now, DoB = DateTime.Today.AddYears(-20),
                     EpaoPrice = 100, FirstName = "Peter", LastName = "Pan", StartDate = DateTime.Today, PlannedEndDate = DateTime.Now.AddMonths(-1).AddYears(2),
                     TrainingPrice = 20000
+                });
+            break;
+        case "2":
+            await PublishMessage(endpointInstance,
+                new ApprenticeshipCreatedEvent 
+                {
+                    ApprenticeshipId = 123434
                 });
             break;
         case "x":

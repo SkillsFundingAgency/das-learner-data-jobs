@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.MockSer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.Functions.ProcessLearners.UnitTests", "SFA.DAS.LearnerData.Functions.ProcessLearners.UnitTests\SFA.DAS.LearnerData.Functions.ProcessLearners.UnitTests.csproj", "{41587618-1427-43BB-9227-7A42F012588A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.Functions.Approvals", "SFA.DAS.LearnerData.Functions.Approvals\SFA.DAS.LearnerData.Functions.Approvals.csproj", "{18D8EF6D-1FFD-40B2-A9DF-E48EFD9D7E8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.Functions.Approvals.UnitTests", "SFA.DAS.LearnerData.Functions.Approvals.UnitTests\SFA.DAS.LearnerData.Functions.Approvals.UnitTests.csproj", "{C4EB420B-6DD1-471F-8B87-3F22091F9F8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,14 @@ Global
 		{41587618-1427-43BB-9227-7A42F012588A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41587618-1427-43BB-9227-7A42F012588A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41587618-1427-43BB-9227-7A42F012588A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18D8EF6D-1FFD-40B2-A9DF-E48EFD9D7E8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D8EF6D-1FFD-40B2-A9DF-E48EFD9D7E8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D8EF6D-1FFD-40B2-A9DF-E48EFD9D7E8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D8EF6D-1FFD-40B2-A9DF-E48EFD9D7E8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4EB420B-6DD1-471F-8B87-3F22091F9F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4EB420B-6DD1-471F-8B87-3F22091F9F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4EB420B-6DD1-471F-8B87-3F22091F9F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4EB420B-6DD1-471F-8B87-3F22091F9F8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,5 +61,6 @@ Global
 		{3A32F17C-5842-405C-808D-CA1CB68C4285} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
 		{8B3C37D8-7C93-49B9-AED2-A716958791AC} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
 		{41587618-1427-43BB-9227-7A42F012588A} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
+		{C4EB420B-6DD1-471F-8B87-3F22091F9F8E} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
 	EndGlobalSection
 EndGlobal

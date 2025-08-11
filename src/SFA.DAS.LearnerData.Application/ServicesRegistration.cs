@@ -3,10 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using SFA.DAS.Http.Configuration;
-using SFA.DAS.LearnerData.Application;
 using SFA.DAS.LearnerData.Application.OuterApi;
 
-namespace SFA.DAS.LearnerData.Functions.ProcessLearners;
+namespace SFA.DAS.LearnerData.Application;
 
 public class ServicesRegistration(IServiceCollection services, IConfiguration configuration)
 {
@@ -22,7 +21,7 @@ public class ServicesRegistration(IServiceCollection services, IConfiguration co
         services.AddTransient<Http.MessageHandlers.LoggingMessageHandler>();
         services.AddTransient<Http.MessageHandlers.ApimHeadersHandler>();
 
-        services.AddHttpClient<ILearnerDataJobsOuterApi, LearnerDataJobsOuterApi>()
+        services.AddHttpClient<ILearnerDataJobsOuterApi, LearnerDataJobsOuterApi>() 
             .AddHttpMessageHandler<Http.MessageHandlers.DefaultHeadersHandler>()
             .AddHttpMessageHandler<Http.MessageHandlers.ApimHeadersHandler>()
             .AddHttpMessageHandler<Http.MessageHandlers.LoggingMessageHandler>();
