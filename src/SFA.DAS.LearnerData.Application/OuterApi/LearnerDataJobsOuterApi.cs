@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -55,23 +56,23 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         }
     }
 
-    public async Task<GetLearnersApiResponse> GetLearnersAsync(long providerId, int page, int pageSize, bool excludeApproved = true)
+    public async Task<GetLearnersApiResponse> GetLearnersAsync(int page, int pageSize, bool excludeApproved = true)
     {
-        var url = $"providers/{providerId}/learners?page={page}&pageSize={pageSize}&excludeApproved={excludeApproved.ToString().ToLower()}";
+        var url = $"learners?page={page}&pageSize={pageSize}&excludeApproved={excludeApproved.ToString().ToLower()}";
         
-        _logger.LogDebug("Fetching learners from: {Url}", url);
+        _logger.LogDebug("Fetching all learners from: {Url}", url);
 
         var response = await _httpClient.GetAsync(url);
         
         if (!response.IsSuccessStatusCode)
         {
-            _logger.LogError("Failed to fetch learners. Status: {StatusCode}, Reason: {ReasonPhrase}", 
+            _logger.LogError("Failed to fetch all learners. Status: {StatusCode}, Reason: {ReasonPhrase}", 
                 response.StatusCode, response.ReasonPhrase);
             return new GetLearnersApiResponse();
         }
 
         var content = await response.Content.ReadAsStringAsync();
-        var apiResponse = System.Text.Json.JsonSerializer.Deserialize<GetLearnersApiResponse>(content, new System.Text.Json.JsonSerializerOptions
+        var apiResponse = System.Text.Json.JsonSerializer.Deserialize<GetLearnersApiResponse>(content, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         });

@@ -8,11 +8,14 @@ using SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners;
 [assembly: NServiceBusTriggerFunction(AzureFunctionsQueueNames.RaiseEventsForExistingLearnersQueue)]
 
 var host = new HostBuilder()
-    .ConfigureFunctionsWebApplication()
+    .ConfigureFunctionsWorkerDefaults()
     .ConfigureAppConfiguration(builder => builder.BuildDasConfiguration())
     .ConfigureNServiceBus(AzureFunctionsQueueNames.RaiseEventsForExistingLearnersQueue)
     .ConfigureServices((context, services) =>
     {
+        var servicesRegistration = new ServicesRegistration(services, context.Configuration);
+        servicesRegistration.Register();
+        
         services
             .AddApplicationInsightsTelemetryWorkerService()
             .ConfigureFunctionsApplicationInsights();

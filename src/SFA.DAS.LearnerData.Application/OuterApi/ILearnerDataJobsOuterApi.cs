@@ -7,5 +7,5 @@ public interface ILearnerDataJobsOuterApi
 {
     Task AddOrUpdateLearner(LearnerDataRequest message);
     Task PatchApprenticeshipId(long providerId, long learnerDataId, PatchLearnerDataApprenticeshipIdRequest message);
-    Task<GetLearnersApiResponse> GetLearnersAsync(long providerId, int page, int pageSize, bool excludeApproved = true);
+    Task<GetLearnersApiResponse> GetLearnersAsync(int page, int pageSize, bool excludeApproved = true);
 }
