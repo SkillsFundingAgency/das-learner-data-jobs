@@ -135,7 +135,7 @@ public class RaiseEventsForExistingLearnersFunction(
             AcademicYear = learner.AcademicYear
         };
         
-        await functionEndpoint.Send(learnerDataEvent, executionContext);
+        await functionEndpoint.Publish(learnerDataEvent, executionContext);
         
         logger.LogDebug("Published LearnerDataEvent for learner {LearnerId} (ULN: {ULN})", 
             learner.Id, learner.Uln);
