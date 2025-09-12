@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.Functio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners", "SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners\SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners.csproj", "{7F8E9A2B-3C4D-5E6F-7890-ABCDEF123456}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners.UnitTests", "SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners.UnitTests\SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners.UnitTests.csproj", "{099413D0-0BF6-4867-AA3B-3321DB672AA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{7F8E9A2B-3C4D-5E6F-7890-ABCDEF123456}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F8E9A2B-3C4D-5E6F-7890-ABCDEF123456}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F8E9A2B-3C4D-5E6F-7890-ABCDEF123456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{099413D0-0BF6-4867-AA3B-3321DB672AA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{099413D0-0BF6-4867-AA3B-3321DB672AA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{099413D0-0BF6-4867-AA3B-3321DB672AA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{099413D0-0BF6-4867-AA3B-3321DB672AA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,5 +74,6 @@ Global
 		{8B3C37D8-7C93-49B9-AED2-A716958791AC} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
 		{41587618-1427-43BB-9227-7A42F012588A} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
 		{C4EB420B-6DD1-471F-8B87-3F22091F9F8E} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
+		{099413D0-0BF6-4867-AA3B-3321DB672AA8} = {DB76062F-B05E-402F-9DF0-0D8AD23F5973}
 	EndGlobalSection
 EndGlobal
