@@ -13,8 +13,7 @@ var host = new HostBuilder()
     .ConfigureNServiceBus(AzureFunctionsQueueNames.RaiseEventsForExistingLearnersQueue)
     .ConfigureServices((context, services) =>
     {
-        var servicesRegistration = new ServicesRegistration(services, context.Configuration);
-        servicesRegistration.Register();
+        services.AddLearnerDataServices(context.Configuration);
         
         services
             .AddApplicationInsightsTelemetryWorkerService()
