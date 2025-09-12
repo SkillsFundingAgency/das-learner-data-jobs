@@ -54,6 +54,8 @@ public class RaiseEventsForExistingLearnersFunction(
 
         var totalProcessed = 0;
         var totalErrors = 0;
+        var consecutivePageErrors = 0;
+        const int maxConsecutivePageErrors = 5;
         var page = 1;
 
         while (true)
@@ -66,6 +68,8 @@ public class RaiseEventsForExistingLearnersFunction(
                 {
                     break;
                 }
+
+                consecutivePageErrors = 0;
 
                 foreach (var learner in learners)
                 {
@@ -91,14 +95,25 @@ public class RaiseEventsForExistingLearnersFunction(
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Failed to process page {Page}", page);
+                consecutivePageErrors++;
                 totalErrors++;
+                
+                logger.LogError(ex, "Failed to process page {Page}. Consecutive page errors: {ConsecutivePageErrors}/{MaxConsecutivePageErrors}", 
+                    page, consecutivePageErrors, maxConsecutivePageErrors);
+
+                if (consecutivePageErrors >= maxConsecutivePageErrors)
+                {
+                    logger.LogError("Circuit breaker triggered after {ConsecutivePageErrors} consecutive page errors. Stopping job execution.", 
+                        consecutivePageErrors);
+                    break;
+                }
+
                 page++;
             }
         }
 
-        logger.LogInformation("Job {JobId} completed with correlation ID {CorrelationId}. Total processed: {TotalProcessed}, Total errors: {TotalErrors}", 
-            jobId, activity.Id, totalProcessed, totalErrors);
+        logger.LogInformation("Job {JobId} completed with correlation ID {CorrelationId}. Total processed: {TotalProcessed}, Total errors: {TotalErrors}, Consecutive page errors: {ConsecutivePageErrors}", 
+            jobId, activity.Id, totalProcessed, totalErrors, consecutivePageErrors);
     }
 
     private async Task<IEnumerable<LearnerDataApiResponse>> GetLearnersPageAsync(int page, int pageSize)
