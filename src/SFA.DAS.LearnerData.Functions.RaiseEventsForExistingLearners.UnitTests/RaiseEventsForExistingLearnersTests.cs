@@ -10,6 +10,7 @@ using SFA.DAS.LearnerData.Application.OuterApi.Responses;
 using SFA.DAS.LearnerData.Events;
 using SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners.Functions;
 using SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners.UnitTests.Helpers;
+using SFA.DAS.LearnerData.Messages;
 using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners.UnitTests;
@@ -85,7 +86,7 @@ public class RaiseEventsForExistingLearnersTests
         result.Should().NotBeNull();
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         apiClient.Verify();
-        functionEndpoint.Verify(x => x.Publish(It.IsAny<LearnerDataEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), Times.Exactly(learners.Count));
+        functionEndpoint.Verify(x => x.Publish(It.IsAny<LearnerDataUpdatedEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), Times.Exactly(learners.Count));
     }
 
     [Test, MoqAutoData]
@@ -145,7 +146,7 @@ public class RaiseEventsForExistingLearnersTests
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         apiClient.Verify(x => x.GetLearnersAsync(1, 100, true), Times.Once);
         apiClient.Verify(x => x.GetLearnersAsync(2, 100, true), Times.Once);
-        functionEndpoint.Verify(x => x.Publish(It.IsAny<LearnerDataEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), 
+        functionEndpoint.Verify(x => x.Publish(It.IsAny<LearnerDataUpdatedEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), 
             Times.Exactly(firstPageLearners.Count + secondPageLearners.Count));
     }
 
@@ -176,9 +177,9 @@ public class RaiseEventsForExistingLearnersTests
         apiClient.Setup(x => x.GetLearnersAsync(2, 100, true))
             .ReturnsAsync(new GetLearnersApiResponse { Data = new List<LearnerDataApiResponse>() });
         
-        LearnerDataEvent? publishedEvent = null;
-        functionEndpoint.Setup(x => x.Publish(It.IsAny<LearnerDataEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()))
-            .Callback<object, FunctionContext, CancellationToken>((evt, ctx, ct) => publishedEvent = evt as LearnerDataEvent);
+        LearnerDataUpdatedEvent? publishedEvent = null;
+        functionEndpoint.Setup(x => x.Publish(It.IsAny<LearnerDataUpdatedEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()))
+            .Callback<object, FunctionContext, CancellationToken>((evt, ctx, ct) => publishedEvent = evt as LearnerDataUpdatedEvent);
         
         // Act
         var result = await sut.Run(requestData, mockFunctionContext.Object);
@@ -188,25 +189,8 @@ public class RaiseEventsForExistingLearnersTests
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         
         publishedEvent.Should().NotBeNull();
-        publishedEvent!.ULN.Should().Be(learner.Uln);
-        publishedEvent.UKPRN.Should().Be(learner.Ukprn);
-        publishedEvent.FirstName.Should().Be(learner.FirstName);
-        publishedEvent.LastName.Should().Be(learner.LastName);
-        publishedEvent.Email.Should().Be(learner.Email);
-        publishedEvent.DoB.Should().Be(learner.Dob);
-        publishedEvent.StartDate.Should().Be(learner.StartDate);
-        publishedEvent.PlannedEndDate.Should().Be(learner.PlannedEndDate);
-        publishedEvent.PercentageLearningToBeDelivered.Should().Be(learner.PercentageLearningToBeDelivered);
-        publishedEvent.EpaoPrice.Should().Be(learner.EpaoPrice);
-        publishedEvent.TrainingPrice.Should().Be(learner.TrainingPrice);
-        publishedEvent.AgreementId.Should().Be(learner.AgreementId);
-        publishedEvent.IsFlexiJob.Should().Be(learner.IsFlexiJob);
-        publishedEvent.PlannedOTJTrainingHours.Should().Be(learner.PlannedOTJTrainingHours);
-        publishedEvent.StandardCode.Should().Be(learner.StandardCode);
-        publishedEvent.ConsumerReference.Should().Be(learner.ConsumerReference);
-        publishedEvent.AcademicYear.Should().Be(learner.AcademicYear);
-        publishedEvent.CorrelationId.Should().NotBeEmpty();
-        publishedEvent.ReceivedDate.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(5));
+        publishedEvent!.LearnerId.Should().Be(learner.Id);
+        publishedEvent.ChangedAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(5));
     }
 
     [Test, MoqAutoData]
@@ -264,7 +248,7 @@ public class RaiseEventsForExistingLearnersTests
         apiClient.Setup(x => x.GetLearnersAsync(2, 100, true))
             .ReturnsAsync(new GetLearnersApiResponse { Data = new List<LearnerDataApiResponse>() });
         
-        functionEndpoint.Setup(x => x.Publish(It.IsAny<LearnerDataEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()))
+        functionEndpoint.Setup(x => x.Publish(It.IsAny<LearnerDataUpdatedEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(publishException);
         
         // Act
@@ -322,7 +306,7 @@ public class RaiseEventsForExistingLearnersTests
         result.Should().NotBeNull();
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         
-        functionEndpoint.Verify(x => x.Publish(It.IsAny<LearnerDataEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), 
+        functionEndpoint.Verify(x => x.Publish(It.IsAny<LearnerDataUpdatedEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), 
             Times.Exactly(secondPageLearners.Count));
     }
 
@@ -383,7 +367,7 @@ public class RaiseEventsForExistingLearnersTests
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         apiClient.Verify(x => x.GetLearnersAsync(1, 100, true), Times.Once);
         apiClient.Verify(x => x.GetLearnersAsync(2, 100, true), Times.Once);
-        functionEndpoint.Verify(x => x.Publish(It.IsAny<LearnerDataEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), 
+        functionEndpoint.Verify(x => x.Publish(It.IsAny<LearnerDataUpdatedEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), 
             Times.Exactly(firstBatchLearners.Count + secondBatchLearners.Count));
     }
 
