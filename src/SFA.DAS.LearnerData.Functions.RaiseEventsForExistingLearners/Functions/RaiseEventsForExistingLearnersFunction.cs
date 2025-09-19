@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerData.Application.OuterApi;
 using SFA.DAS.LearnerData.Application.OuterApi.Responses;
 using SFA.DAS.LearnerData.Events;
+using SFA.DAS.LearnerData.Messages;
 
 namespace SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners.Functions;
 
@@ -127,32 +128,15 @@ public class RaiseEventsForExistingLearnersFunction(
 
     private async Task RaiseLearnerDataEventAsync(LearnerDataApiResponse learner, FunctionContext executionContext)
     {
-        var learnerDataEvent = new LearnerDataEvent
+        var learnerDataUpdatedEvent = new LearnerDataUpdatedEvent
         {
-            ULN = learner.Uln,
-            UKPRN = learner.Ukprn,
-            FirstName = learner.FirstName,
-            LastName = learner.LastName,
-            Email = learner.Email,
-            DoB = learner.Dob,
-            StartDate = learner.StartDate,
-            PlannedEndDate = learner.PlannedEndDate,
-            PercentageLearningToBeDelivered = learner.PercentageLearningToBeDelivered,
-            EpaoPrice = learner.EpaoPrice,
-            TrainingPrice = learner.TrainingPrice,
-            AgreementId = learner.AgreementId,
-            IsFlexiJob = learner.IsFlexiJob,
-            PlannedOTJTrainingHours = learner.PlannedOTJTrainingHours,
-            StandardCode = learner.StandardCode,
-            ConsumerReference = learner.ConsumerReference,
-            CorrelationId = Guid.NewGuid(),
-            ReceivedDate = DateTime.UtcNow,
-            AcademicYear = learner.AcademicYear
+            LearnerId = learner.Id,
+            ChangedAt = DateTime.UtcNow
         };
         
-        await functionEndpoint.Publish(learnerDataEvent, executionContext);
+        await functionEndpoint.Publish(learnerDataUpdatedEvent, executionContext);
         
-        logger.LogDebug("Published LearnerDataEvent for learner {LearnerId} (ULN: {ULN})", 
+        logger.LogDebug("Published LearnerDataUpdatedEvent for learner {LearnerId} (ULN: {ULN})", 
             learner.Id, learner.Uln);
     }
 }
