@@ -2,6 +2,6 @@
 
 public class PatchLearnerDataApprenticeshipIdRequest
 {
-    public long ApprenticeshipId { get; set; }
+    public long? ApprenticeshipId { get; set; }
 
 }
