@@ -51,6 +51,5 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
             _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
             throw new HttpRequestException("Unsuccessful status code returned when updating ApprenticeshipId on learner data record", null, response.StatusCode);
         }
-    }   
-
+    }
 }
