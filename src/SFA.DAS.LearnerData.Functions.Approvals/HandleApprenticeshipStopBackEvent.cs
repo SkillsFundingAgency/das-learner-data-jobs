@@ -13,6 +13,11 @@ namespace SFA.DAS.LearnersData.Functions.ApprenticeshipStopBack
                 log.LogTrace("No patch of ApprenticeshipId required");
                 return;
             }
+            if (message.LearnerDataId is null)
+            {
+                log.LogTrace("Learner Data Id is required");
+                return;
+            }
 
             log.LogTrace("NServiceBus sending PatchLearnerDataApprenticeshipIdRequest");
             var request = new PatchLearnerDataApprenticeshipIdRequest
