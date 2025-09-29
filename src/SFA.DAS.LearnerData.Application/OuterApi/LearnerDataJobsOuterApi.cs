@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using SFA.DAS.LearnerData.Events;
+using SFA.DAS.LearnerData.Application.Models;
 using System.Text;
 
 namespace SFA.DAS.LearnerData.Application.OuterApi;
@@ -38,7 +38,7 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         }
     }
 
-    public async Task<LearnerDataEvent> GetLearnerById(long providerId, long? learnerDataId)
+    public async Task<GetLearnerDataResponse> GetLearnerById(long providerId, long? learnerDataId)
     {
         var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"providers/{providerId}/learners/{learnerDataId}");
         
@@ -52,11 +52,10 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         }
         
         string json = await response.Content.ReadAsStringAsync();
-        var learner = JsonConvert.DeserializeObject<LearnerDataEvent>(json);
+        var learner = JsonConvert.DeserializeObject<GetLearnerDataResponse>(json);
 
-        return learner??new LearnerDataEvent();
+        return learner??new GetLearnerDataResponse();
     }
-
 
     public async Task PatchApprenticeshipId(long providerId, long learnerDataId, PatchLearnerDataApprenticeshipIdRequest message)
     {

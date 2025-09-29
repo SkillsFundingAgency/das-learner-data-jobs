@@ -3,13 +3,13 @@ using Microsoft.VisualBasic;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.CommitmentsV2.Messages.Events;
+using SFA.DAS.LearnerData.Application.Models;
 using SFA.DAS.LearnerData.Application.OuterApi;
 using SFA.DAS.LearnerData.Events;
 using SFA.DAS.LearnersData.Functions.Approvals;
 using SFA.DAS.Testing.AutoFixture;
 
-namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests
-{
+namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
     public class WhenApprenticeshipStoppedEventTriggered
     {
         [Test, MoqAutoData]
@@ -33,7 +33,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests
             HandleApprenticeshipStoppedEvent sut,
             ApprenticeshipStoppedEvent evt)
         {
-            api.Setup(t => t.GetLearnerById(It.IsAny<long>(), It.IsAny<long?>())).ReturnsAsync(new LearnerDataEvent()
+            api.Setup(t => t.GetLearnerById(It.IsAny<long>(), It.IsAny<long?>())).ReturnsAsync(new GetLearnerDataResponse()
             {
                      ApprenticeshipId = evt.ApprenticeshipId,                    
             });
@@ -59,4 +59,3 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests
                     It.IsAny<PatchLearnerDataApprenticeshipIdRequest>()), Times.Never);
         }
     }
-}

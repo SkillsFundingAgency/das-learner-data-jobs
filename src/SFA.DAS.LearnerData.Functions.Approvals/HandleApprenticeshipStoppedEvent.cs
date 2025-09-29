@@ -2,8 +2,7 @@
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.LearnerData.Application.OuterApi;
 
-namespace SFA.DAS.LearnersData.Functions.Approvals
-{
+namespace SFA.DAS.LearnersData.Functions.Approvals;
     public class HandleApprenticeshipStoppedEvent(ILearnerDataJobsOuterApi outerApi, ILogger<HandleApprenticeshipStoppedEvent> log) : IHandleMessages<ApprenticeshipStoppedEvent>
     {
         public async Task Handle(ApprenticeshipStoppedEvent message, IMessageHandlerContext context)
@@ -18,15 +17,14 @@ namespace SFA.DAS.LearnersData.Functions.Approvals
                 log.LogTrace("Learner Data Id is required");
                 return;
             }
-            if(!message.IsWithDrawnFromStart)
+            if(!message.IsWithDrawnAtStartOfCourse)
             {
                 log.LogTrace("Apprentice is not withdrawn from start");
                 return;
-            }           
-           
+            }
 
             var learner = await outerApi.GetLearnerById(message.ProviderId, message.LearnerDataId);
-            if (message.ApprenticeshipId == learner.ApprenticeshipId && message.IsWithDrawnFromStart)
+            if (message.ApprenticeshipId == learner.ApprenticeshipId && message.IsWithDrawnAtStartOfCourse)
             {
                 log.LogTrace("NServiceBus sending PatchLearnerDataApprenticeshipIdRequest");
                 var request = new PatchLearnerDataApprenticeshipIdRequest
@@ -40,7 +38,5 @@ namespace SFA.DAS.LearnersData.Functions.Approvals
 
             log.LogTrace("NServiceBus not sent PatchLearnerDataApprenticeshipIdRequest");
             return;
-
         }
     }
-}
