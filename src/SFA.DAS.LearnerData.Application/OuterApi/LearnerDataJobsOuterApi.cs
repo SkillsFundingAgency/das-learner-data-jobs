@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using SFA.DAS.LearnerData.Events;
 using System.Text;
 
 namespace SFA.DAS.LearnerData.Application.OuterApi;
@@ -36,6 +37,26 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
             throw new HttpRequestException("Unsuccessful status code returned when adding or updating learner data", null, response.StatusCode);
         }
     }
+
+    public async Task<LearnerDataEvent> GetLearnerById(long providerId, long? learnerDataId)
+    {
+        var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"providers/{providerId}/learners/{learnerDataId}");
+        
+        _logger.LogTrace("Getting learner data from inner API");
+        var response = await _httpClient.SendAsync(requestMessage);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
+            throw new HttpRequestException("Unsuccessful status code returned when adding or updating learner data", null, response.StatusCode);
+        }
+        
+        string json = await response.Content.ReadAsStringAsync();
+        var learner = JsonConvert.DeserializeObject<LearnerDataEvent>(json);
+
+        return learner??new LearnerDataEvent();
+    }
+
 
     public async Task PatchApprenticeshipId(long providerId, long learnerDataId, PatchLearnerDataApprenticeshipIdRequest message)
     {

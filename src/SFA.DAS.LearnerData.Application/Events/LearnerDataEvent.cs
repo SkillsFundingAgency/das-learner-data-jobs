@@ -21,4 +21,5 @@ public class LearnerDataEvent
     public Guid CorrelationId { get; set; }
     public DateTime ReceivedDate { get; set; }
     public int AcademicYear { get; set; }
+    public long? ApprenticeshipId { get; set; }
 }

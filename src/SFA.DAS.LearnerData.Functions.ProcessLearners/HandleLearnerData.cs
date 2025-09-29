@@ -29,7 +29,8 @@ public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<H
             ConsumerReference = message.ConsumerReference,
             CorrelationId = message.CorrelationId,
             ReceivedDate = message.ReceivedDate,
-            AcademicYear = message.AcademicYear
+            AcademicYear = message.AcademicYear,
+            ApprenticeshipId = message.ApprenticeshipId
         };
 
         await outerApi.AddOrUpdateLearner(request);

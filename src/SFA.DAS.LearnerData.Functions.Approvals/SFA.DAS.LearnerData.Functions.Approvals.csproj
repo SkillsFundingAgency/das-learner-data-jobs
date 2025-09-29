@@ -21,7 +21,7 @@
     <PackageReference Include="NServiceBus.AzureFunctions.Worker.ServiceBus" Version="5.2.2" />
     <PackageReference Include="NServiceBus.Extensions.Hosting" Version="3.0.1" />
     <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="4.1.0" />
-    <PackageReference Include="SFA.DAS.CommitmentsV2.Messages" Version="100.0.147-prerelease-5" />
+    <PackageReference Include="SFA.DAS.CommitmentsV2.Messages" Version="100.0.147-prerelease-2" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\SFA.DAS.LearnerData.Application\SFA.DAS.LearnerData.Application.csproj" />
