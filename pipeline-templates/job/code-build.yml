@@ -34,6 +34,14 @@ jobs:
       projects: src/${{ parameters.SolutionBaseName }}.Functions.Approvals/${{ parameters.SolutionBaseName }}.Functions.Approvals.csproj
       arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
 
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish - dotnet publish Function App RaiseEventsForExistingLearners'
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: src/${{ parameters.SolutionBaseName }}.Functions.RaiseEventsForExistingLearners/${{ parameters.SolutionBaseName }}.Functions.RaiseEventsForExistingLearners.csproj
+      arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
+
   - task: CopyFiles@2
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
