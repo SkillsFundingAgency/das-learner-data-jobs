@@ -2,6 +2,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerData.Application;
 using SFA.DAS.LearnerData.Application.NServiceBus;
 using SFA.DAS.LearnerData.Functions.Approvals;
@@ -21,6 +22,12 @@ var host = new HostBuilder()
             .AddApplicationInsightsTelemetryWorkerService()
             .ConfigureFunctionsApplicationInsights();
     })
+    .ConfigureLogging((context, logging) =>
+    {
+        logging.AddApplicationInsights();
+        logging.SetMinimumLevel(LogLevel.Trace);
+        }
+     )    
     .Build();
 
 host.Run();

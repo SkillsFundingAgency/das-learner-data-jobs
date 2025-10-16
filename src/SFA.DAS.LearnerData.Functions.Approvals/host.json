@@ -9,8 +9,10 @@
       "enableLiveMetricsFilters": true
     },
     "logLevel": {
-      "default": "Warning",
-      "Function": "Information"
+      "default": "Trace",
+      "Function": "Trace",
+      "Host.Results": "Information",
+      "Worker": "Trace"
     }
   }
 }
