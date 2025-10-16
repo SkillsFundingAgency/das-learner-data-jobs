@@ -29,6 +29,8 @@ public class LearnerDataApiResponse
     public int StandardCode { get; set; }
     public string ConsumerReference { get; set; } = string.Empty;
     public DateTime ReceivedDate { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime? UpdatedDate { get; set; }
     public int AcademicYear { get; set; }
     public long? ApprenticeshipId { get; set; }
 }

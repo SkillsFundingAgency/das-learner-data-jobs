@@ -128,6 +128,13 @@ public class RaiseEventsForExistingLearnersFunction(
 
     private async Task RaiseLearnerDataEventAsync(LearnerDataApiResponse learner, FunctionContext executionContext)
     {
+        if (learner.UpdatedDate == null || learner.UpdatedDate <= learner.CreatedDate)
+        {
+            logger.LogDebug("Skipping event for learner {LearnerId} (ULN: {ULN}) - UpdatedDate ({UpdatedDate}) is not greater than CreatedDate ({CreatedDate})", 
+                learner.Id, learner.Uln, learner.UpdatedDate, learner.CreatedDate);
+            return;
+        }
+
         var learnerDataUpdatedEvent = new LearnerDataUpdatedEvent
         {
             LearnerId = learner.Id,
@@ -136,7 +143,7 @@ public class RaiseEventsForExistingLearnersFunction(
         
         await functionEndpoint.Publish(learnerDataUpdatedEvent, executionContext);
         
-        logger.LogDebug("Published LearnerDataUpdatedEvent for learner {LearnerId} (ULN: {ULN})", 
-            learner.Id, learner.Uln);
+        logger.LogInformation("Published LearnerDataUpdatedEvent for learner {LearnerId} (ULN: {ULN}) - UpdatedDate ({UpdatedDate}) > CreatedDate ({CreatedDate})", 
+            learner.Id, learner.Uln, learner.UpdatedDate, learner.CreatedDate);
     }
 }

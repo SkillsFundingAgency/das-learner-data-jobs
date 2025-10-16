@@ -103,13 +103,25 @@ public class RaiseEventsForExistingLearnersTests
         var firstPageLearners = new List<LearnerDataApiResponse>();
         for (int i = 0; i < 100; i++)
         {
-            firstPageLearners.Add(new LearnerDataApiResponse { Id = i + 1, Uln = 1000000000 + i });
+            firstPageLearners.Add(new LearnerDataApiResponse 
+            { 
+                Id = i + 1, 
+                Uln = 1000000000 + i,
+                CreatedDate = DateTime.UtcNow.AddDays(-10),
+                UpdatedDate = DateTime.UtcNow.AddDays(-5)
+            });
         }
         
         var secondPageLearners = new List<LearnerDataApiResponse>();
         for (int i = 0; i < 50; i++)
         {
-            secondPageLearners.Add(new LearnerDataApiResponse { Id = i + 101, Uln = 1000000100 + i });
+            secondPageLearners.Add(new LearnerDataApiResponse 
+            { 
+                Id = i + 101, 
+                Uln = 1000000100 + i,
+                CreatedDate = DateTime.UtcNow.AddDays(-10),
+                UpdatedDate = DateTime.UtcNow.AddDays(-5)
+            });
         }
         
         var firstPageResponse = new GetLearnersApiResponse
@@ -321,13 +333,25 @@ public class RaiseEventsForExistingLearnersTests
         var firstBatchLearners = new List<LearnerDataApiResponse>();
         for (int i = 0; i < 100; i++)
         {
-            firstBatchLearners.Add(new LearnerDataApiResponse { Id = i + 1, Uln = 1000000000 + i });
+            firstBatchLearners.Add(new LearnerDataApiResponse 
+            { 
+                Id = i + 1, 
+                Uln = 1000000000 + i,
+                CreatedDate = DateTime.UtcNow.AddDays(-10),
+                UpdatedDate = DateTime.UtcNow.AddDays(-5)
+            });
         }
         
         var secondBatchLearners = new List<LearnerDataApiResponse>();
         for (int i = 0; i < 50; i++)
         {
-            secondBatchLearners.Add(new LearnerDataApiResponse { Id = i + 101, Uln = 1000000100 + i });
+            secondBatchLearners.Add(new LearnerDataApiResponse 
+            { 
+                Id = i + 101, 
+                Uln = 1000000100 + i,
+                CreatedDate = DateTime.UtcNow.AddDays(-10),
+                UpdatedDate = DateTime.UtcNow.AddDays(-5)
+            });
         }
         
         var mockFunctionContext = new Mock<FunctionContext>();
@@ -400,5 +424,75 @@ public class RaiseEventsForExistingLearnersTests
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
         apiClient.Verify(x => x.GetLearnersAsync(It.IsAny<int>(), 100, true), Times.Exactly(5));
         functionEndpoint.Verify(x => x.Publish(It.IsAny<object>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Test, MoqAutoData]
+    public async Task And_Learner_UpdateDate_Not_Greater_Than_CreatedDate_Then_Skip_Event_Publishing(
+        [Frozen] Mock<ILearnerDataJobsOuterApi> apiClient,
+        [Frozen] Mock<IFunctionEndpoint> functionEndpoint,
+        [Frozen] Mock<ILogger<RaiseEventsForExistingLearnersFunction>> logger,
+        RaiseEventsForExistingLearnersFunction sut)
+    {
+        // Arrange
+        var mockFunctionContext = new Mock<FunctionContext>();
+        var requestData = new FakeHttpRequestData(mockFunctionContext.Object, new Uri("https://test"));
+        
+        List<LearnerDataApiResponse> learners =
+        [
+            new()
+            {
+                Id = 1,
+                Uln = 1000000001,
+                CreatedDate = DateTime.UtcNow.AddDays(-5),
+                UpdatedDate = DateTime.UtcNow.AddDays(-5) // Same as CreatedDate - should be skipped
+            },
+
+            new()
+            {
+                Id = 2,
+                Uln = 1000000002,
+                CreatedDate = DateTime.UtcNow.AddDays(-5),
+                UpdatedDate = DateTime.UtcNow.AddDays(-6) // Earlier than CreatedDate - should be skipped
+            },
+
+            new()
+            {
+                Id = 3,
+                Uln = 1000000003,
+                CreatedDate = DateTime.UtcNow.AddDays(-10),
+                UpdatedDate = DateTime.UtcNow.AddDays(-5) // Later than CreatedDate - should be published
+            }
+        ];
+        
+        var response = new GetLearnersApiResponse
+        {
+            Data = learners,
+            Page = 1,
+            PageSize = 100,
+            TotalItems = learners.Count,
+            TotalPages = 1
+        };
+        
+        apiClient.Setup(x => x.GetLearnersAsync(1, 100, true))
+            .ReturnsAsync(response);
+        
+        apiClient.Setup(x => x.GetLearnersAsync(2, 100, true))
+            .ReturnsAsync(new GetLearnersApiResponse { Data = new List<LearnerDataApiResponse>() });
+        
+        // Act
+        var result = await sut.Run(requestData, mockFunctionContext.Object);
+        
+        // Assert
+        result.Should().NotBeNull();
+        result.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        
+        functionEndpoint.Verify(x => x.Publish(It.IsAny<LearnerDataUpdatedEvent>(), It.IsAny<FunctionContext>(), It.IsAny<CancellationToken>()), 
+            Times.Once);
+        
+        functionEndpoint.Verify(x => x.Publish(
+            It.Is<LearnerDataUpdatedEvent>(e => e.LearnerId == 3), 
+            It.IsAny<FunctionContext>(), 
+            It.IsAny<CancellationToken>()), 
+            Times.Once);
     }
 }
