@@ -8,6 +8,8 @@ public class HandleApprenticeshipCreatedEvent(ILearnerDataJobsOuterApi outerApi,
 {
     public async Task Handle(ApprenticeshipCreatedEvent message, IMessageHandlerContext context)
     {
+        log.LogInformation("Inside Handle apprenticeship created event");
+        log.LogWarning("Inside Handle apprenticeship created event warning.");
         if (message.LearnerDataId == null)
         {
             log.LogTrace("No patch of LearnerData required");

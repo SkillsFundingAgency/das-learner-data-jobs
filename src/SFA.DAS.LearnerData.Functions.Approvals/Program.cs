@@ -25,7 +25,7 @@ var host = new HostBuilder()
     .ConfigureLogging((context, logging) =>
     {
         logging.AddApplicationInsights();
-        logging.SetMinimumLevel(LogLevel.Trace);
+        logging.SetMinimumLevel(LogLevel.Debug);
         }
      )    
     .Build();
