@@ -26,11 +26,10 @@ var host = new HostBuilder()
     })
     .Build();
 
+host.Run();
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
 
 builder.Build().Run();
-
-host.Run();
