@@ -63,6 +63,13 @@ public class RaiseEventsForExistingLearnersTests
         var mockFunctionContext = new Mock<FunctionContext>();
         var requestData = new FakeHttpRequestData(mockFunctionContext.Object, new Uri("https://test"));
         
+        // Ensure all learners have UpdatedDate > CreatedDate so they will be published
+        foreach (var learner in learners)
+        {
+            learner.CreatedDate = DateTime.UtcNow.AddDays(-10);
+            learner.UpdatedDate = DateTime.UtcNow.AddDays(-5);
+        }
+        
         var response = new GetLearnersApiResponse
         {
             Data = learners,
@@ -174,6 +181,9 @@ public class RaiseEventsForExistingLearnersTests
         var mockFunctionContext = new Mock<FunctionContext>();
         var requestData = new FakeHttpRequestData(mockFunctionContext.Object, new Uri("https://test"));
         
+        learner.CreatedDate = DateTime.UtcNow.AddDays(-10);
+        learner.UpdatedDate = DateTime.UtcNow.AddDays(-5);
+        
         var response = new GetLearnersApiResponse
         {
             Data = new List<LearnerDataApiResponse> { learner },
@@ -283,6 +293,12 @@ public class RaiseEventsForExistingLearnersTests
         // Arrange
         var mockFunctionContext = new Mock<FunctionContext>();
         var requestData = new FakeHttpRequestData(mockFunctionContext.Object, new Uri("https://test"));
+        
+        foreach (var learner in secondPageLearners)
+        {
+            learner.CreatedDate = DateTime.UtcNow.AddDays(-10);
+            learner.UpdatedDate = DateTime.UtcNow.AddDays(-5);
+        }
         
         var secondPageResponse = new GetLearnersApiResponse
         {
@@ -437,30 +453,31 @@ public class RaiseEventsForExistingLearnersTests
         var mockFunctionContext = new Mock<FunctionContext>();
         var requestData = new FakeHttpRequestData(mockFunctionContext.Object, new Uri("https://test"));
         
+        var baseTime = DateTime.UtcNow;
         List<LearnerDataApiResponse> learners =
         [
             new()
             {
                 Id = 1,
                 Uln = 1000000001,
-                CreatedDate = DateTime.UtcNow.AddDays(-5),
-                UpdatedDate = DateTime.UtcNow.AddDays(-5) // Same as CreatedDate - should be skipped
+                CreatedDate = baseTime.AddDays(-5),
+                UpdatedDate = baseTime.AddDays(-5) // Same as CreatedDate - should be skipped
             },
 
             new()
             {
                 Id = 2,
                 Uln = 1000000002,
-                CreatedDate = DateTime.UtcNow.AddDays(-5),
-                UpdatedDate = DateTime.UtcNow.AddDays(-6) // Earlier than CreatedDate - should be skipped
+                CreatedDate = baseTime.AddDays(-5),
+                UpdatedDate = baseTime.AddDays(-6) // Earlier than CreatedDate - should be skipped
             },
 
             new()
             {
                 Id = 3,
                 Uln = 1000000003,
-                CreatedDate = DateTime.UtcNow.AddDays(-10),
-                UpdatedDate = DateTime.UtcNow.AddDays(-5) // Later than CreatedDate - should be published
+                CreatedDate = baseTime.AddDays(-10),
+                UpdatedDate = baseTime.AddDays(-5) // Later than CreatedDate - should be published
             }
         ];
         
