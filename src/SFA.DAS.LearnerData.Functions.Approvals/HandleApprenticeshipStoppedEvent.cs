@@ -10,34 +10,34 @@ namespace SFA.DAS.LearnersData.Functions.Approvals;
            log.LogInformation("Handling ApprenticeshipStoppedEvent");
             if (message.ApprenticeshipId == 0)
             {
-                log.LogTrace("No patch of ApprenticeshipId required");
+                log.LogInformation("No patch of ApprenticeshipId required");
                 return;
             }
             if (message.LearnerDataId is null)
             {
-                log.LogTrace("Learner Data Id is required");
+                log.LogInformation("Learner Data Id is required");
                 return;
             }
             if(!message.IsWithDrawnAtStartOfCourse)
             {
-                log.LogTrace("Apprentice is not withdrawn from start");
+                log.LogInformation("Apprentice is not withdrawn from start");
                 return;
             }
 
             var learner = await outerApi.GetLearnerById(message.ProviderId, message.LearnerDataId);
             if (message.ApprenticeshipId == learner.ApprenticeshipId && message.IsWithDrawnAtStartOfCourse)
             {
-                log.LogTrace("NServiceBus sending PatchLearnerDataApprenticeshipIdRequest");
+                log.LogInformation("NServiceBus sending PatchLearnerDataApprenticeshipIdRequest");
                 var request = new PatchLearnerDataApprenticeshipIdRequest
                 {
                     ApprenticeshipId = null
                 };
 
                 await outerApi.PatchApprenticeshipId(message.ProviderId,(long)message.LearnerDataId, request);
-                log.LogTrace("NServiceBus sent PatchLearnerDataApprenticeshipIdRequest");
+                log.LogInformation("NServiceBus sent PatchLearnerDataApprenticeshipIdRequest");
             }
 
-            log.LogTrace("NServiceBus not sent PatchLearnerDataApprenticeshipIdRequest");
+            log.LogInformation("NServiceBus not sent PatchLearnerDataApprenticeshipIdRequest");
             return;
         }
     }
