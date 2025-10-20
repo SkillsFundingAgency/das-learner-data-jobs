@@ -7,7 +7,7 @@ namespace SFA.DAS.LearnersData.Functions.Approvals;
     {
         public async Task Handle(ApprenticeshipStoppedEvent message, IMessageHandlerContext context)
         {
-           log.LogInformation("Inside Handle apprenticeship stopped events");
+           log.LogInformation("Handling ApprenticeshipStoppedEvent");
             if (message.ApprenticeshipId == 0)
             {
                 log.LogTrace("No patch of ApprenticeshipId required");
