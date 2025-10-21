@@ -33,7 +33,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             HandleApprenticeshipStoppedEvent sut,
             ApprenticeshipStoppedEvent evt)
         {
-            api.Setup(t => t.GetLearnerById(It.IsAny<long>(), It.IsAny<long?>())).ReturnsAsync(new GetLearnerDataResponse()
+            api.Setup(t => t.GetLearnerById(It.IsAny<long>(), It.IsAny<long>())).ReturnsAsync(new GetLearnerDataResponse()
             {
                      ApprenticeshipId = evt.ApprenticeshipId,                    
             });

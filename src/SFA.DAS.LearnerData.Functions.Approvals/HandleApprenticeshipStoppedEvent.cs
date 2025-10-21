@@ -24,7 +24,7 @@ namespace SFA.DAS.LearnersData.Functions.Approvals;
                 return;
             }
 
-            var learner = await outerApi.GetLearnerById(message.ProviderId, message.LearnerDataId);
+            var learner = await outerApi.GetLearnerById(message.ProviderId,(long)message.LearnerDataId);
             if (message.ApprenticeshipId == learner.ApprenticeshipId && message.IsWithDrawnAtStartOfCourse)
             {
                 log.LogInformation("NServiceBus sending PatchLearnerDataApprenticeshipIdRequest");

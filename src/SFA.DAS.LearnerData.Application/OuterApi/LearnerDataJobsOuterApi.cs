@@ -38,7 +38,7 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         }
     }
 
-    public async Task<GetLearnerDataResponse> GetLearnerById(long providerId, long? learnerDataId)
+    public async Task<GetLearnerDataResponse> GetLearnerById(long providerId, long learnerDataId)
     {
         var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"providers/{providerId}/learners/{learnerDataId}");
         
