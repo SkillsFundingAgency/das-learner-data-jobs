@@ -40,15 +40,18 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
 
     public async Task<GetLearnerDataResponse> GetLearnerById(long providerId, long learnerDataId)
     {
-        var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"providers/{providerId}/learners/{learnerDataId}");
-        
+        var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"providers/{providerId}/learners/{learnerDataId}")
+        {
+            Content = new StringContent("reponse", Encoding.Default, "text/plain")
+        };
+
         _logger.LogTrace("Getting learner data from inner API");
         var response = await _httpClient.SendAsync(requestMessage);
 
         if (!response.IsSuccessStatusCode)
         {
             _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
-            throw new HttpRequestException("Unsuccessful status code returned when adding or updating learner data", null, response.StatusCode);
+            throw new HttpRequestException("Unsuccessful status code returned when getting learner data", null, response.StatusCode);
         }
         
         string json = await response.Content.ReadAsStringAsync();
