@@ -42,7 +42,7 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
     {
         var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"providers/{providerId}/learners/{learnerDataId}")
         {
-            Content = new StringContent("reponse", Encoding.UTF8, "text/plain")
+            Content = new StringContent("reponse", Encoding.UTF8, "application/json")
         };
 
         _logger.LogTrace("Getting learner data from inner API");
