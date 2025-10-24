@@ -38,28 +38,6 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         }
     }
 
-    public async Task<GetLearnerDataResponse> GetLearnerById(long providerId, long learnerDataId)
-    {
-        var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"providers/{providerId}/learners/{learnerDataId}")
-        {
-            Content = new StringContent("reponse", Encoding.UTF8, "application/json")
-        };
-
-        _logger.LogTrace("Getting learner data from inner API");
-        var response = await _httpClient.SendAsync(requestMessage);
-
-        if (!response.IsSuccessStatusCode)
-        {
-            _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
-            throw new HttpRequestException("Unsuccessful status code returned when getting learner data", null, response.StatusCode);
-        }
-        
-        string json = await response.Content.ReadAsStringAsync();
-        var learner = JsonConvert.DeserializeObject<GetLearnerDataResponse>(json);
-
-        return learner??new GetLearnerDataResponse();
-    }
-
     public async Task PatchApprenticeshipId(long providerId, long learnerDataId, PatchLearnerDataApprenticeshipIdRequest message)
     {
         var requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"providers/{providerId}/learners/{learnerDataId}/apprenticeshipId");
@@ -71,6 +49,23 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         {
             _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
             throw new HttpRequestException("Unsuccessful status code returned when updating ApprenticeshipId on learner data record", null, response.StatusCode);
+        }
+    }
+
+    public async Task PatchApprenticeshipStop(long providerId, long learnerDataId, ApprenticeshipStopRequest message)
+    {
+        var requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"providers/{providerId}/learner/{learnerDataId}/apprenticeship-stop")
+        {
+            Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
+        };
+
+        _logger.LogTrace("sening learnder DataId to patch to outer API");
+        var response = await _httpClient.SendAsync(requestMessage);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
+            throw new HttpRequestException("Unsuccessful status code returned when getting learner data", null, response.StatusCode);
         }
     }
 }
