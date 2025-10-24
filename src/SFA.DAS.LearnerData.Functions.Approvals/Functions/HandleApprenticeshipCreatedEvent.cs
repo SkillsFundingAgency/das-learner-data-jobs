@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.LearnerData.Application.OuterApi;
+using SFA.DAS.LearnerData.Application.OuterApi.Requests;
 
-namespace SFA.DAS.LearnerData.Functions.Approvals;
+namespace SFA.DAS.LearnerData.Functions.Approvals.Functions;
 
 public class HandleApprenticeshipCreatedEvent(ILearnerDataJobsOuterApi outerApi, ILogger<HandleApprenticeshipCreatedEvent> log) : IHandleMessages<ApprenticeshipCreatedEvent>
 {

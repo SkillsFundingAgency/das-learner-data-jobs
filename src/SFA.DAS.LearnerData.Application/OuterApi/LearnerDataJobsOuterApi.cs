@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Text;
+using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System.Text;
+using SFA.DAS.LearnerData.Application.OuterApi.Requests;
+using SFA.DAS.LearnerData.Application.OuterApi.Responses;
 
 namespace SFA.DAS.LearnerData.Application.OuterApi;
 
@@ -51,5 +54,29 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
             _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
             throw new HttpRequestException("Unsuccessful status code returned when updating ApprenticeshipId on learner data record", null, response.StatusCode);
         }
+    }
+
+    public async Task<GetLearnersApiResponse> GetLearnersAsync(int page, int pageSize, bool excludeApproved = true)
+    {
+        var url = $"learners?page={page}&pageSize={pageSize}&excludeApproved={excludeApproved.ToString().ToLower()}";
+        
+        _logger.LogDebug("Fetching all learners from: {Url}", url);
+
+        var response = await _httpClient.GetAsync(url);
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Failed to fetch all learners. Status: {StatusCode}, Reason: {ReasonPhrase}", 
+                response.StatusCode, response.ReasonPhrase);
+            return new GetLearnersApiResponse();
+        }
+
+        var content = await response.Content.ReadAsStringAsync();
+        var apiResponse = System.Text.Json.JsonSerializer.Deserialize<GetLearnersApiResponse>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        return apiResponse ?? new GetLearnersApiResponse();
     }
 }

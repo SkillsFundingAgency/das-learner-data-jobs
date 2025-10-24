@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerData.Application.OuterApi;
+using SFA.DAS.LearnerData.Application.OuterApi.Requests;
 using SFA.DAS.LearnerData.Events;
 
-namespace SFA.DAS.LearnerData.Functions.ProcessLearners;
+namespace SFA.DAS.LearnerData.Functions.ProcessLearners.Functions;
 
 public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<HandleLearnerDataEvent> log) : IHandleMessages<LearnerDataEvent>
 {

@@ -1,17 +1,16 @@
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SFA.DAS.LearnerData.Application;
 using SFA.DAS.LearnerData.Application.NServiceBus;
-using SFA.DAS.LearnerData.Functions.Approvals;
+using SFA.DAS.LearnerData.Functions.RaiseEventsForExistingLearners;
 
-[assembly: NServiceBusTriggerFunction(AzureFunctionsQueueNames.ApprovalsQueue)]
+[assembly: NServiceBusTriggerFunction(AzureFunctionsQueueNames.RaiseEventsForExistingLearnersQueue)]
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
     .ConfigureAppConfiguration(builder => builder.BuildDasConfiguration())
-    .ConfigureNServiceBus(AzureFunctionsQueueNames.ApprovalsQueue)
+    .ConfigureNServiceBus(AzureFunctionsQueueNames.RaiseEventsForExistingLearnersQueue)
     .ConfigureServices((context, services) =>
     {
         services.AddLearnerDataServices(context.Configuration);
@@ -23,10 +22,3 @@ var host = new HostBuilder()
     .Build();
 
 host.Run();
-
-
-var builder = FunctionsApplication.CreateBuilder(args);
-
-builder.ConfigureFunctionsWebApplication();
-
-builder.Build().Run();
