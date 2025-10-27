@@ -18,9 +18,6 @@ var host = new HostBuilder()
         services.AddLearnerDataServices(context.Configuration);
         
         services.AddDasLogging();
-        
-        var servicesRegistration = new ServicesRegistration(services, context.Configuration);
-        servicesRegistration.Register();
 
         services
             .AddApplicationInsightsTelemetryWorkerService()

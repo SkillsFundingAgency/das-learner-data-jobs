@@ -1,10 +1,10 @@
-﻿using System.Text;
-using System.Text.Json;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using SFA.DAS.LearnerData.Application.Models;
+using SFA.DAS.LearnerData.Application.OuterApi.Requests;
+using SFA.DAS.LearnerData.Application.OuterApi.Responses;
 using System.Text;
+using System.Text.Json;
 
 namespace SFA.DAS.LearnerData.Application.OuterApi;
 
