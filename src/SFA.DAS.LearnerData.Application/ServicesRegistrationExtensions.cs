@@ -1,15 +1,17 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using SFA.DAS.Http.Configuration;
 using SFA.DAS.LearnerData.Application.OuterApi;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SFA.DAS.LearnerData.Application;
 
-public class ServicesRegistration(IServiceCollection services, IConfiguration configuration)
+[ExcludeFromCodeCoverage]
+public static class ServicesRegistrationExtensions
 {
-    public IServiceCollection Register()
+    public static IServiceCollection AddLearnerDataServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.Replace(ServiceDescriptor.Singleton(typeof(IConfiguration), configuration));
         services.AddOptions();

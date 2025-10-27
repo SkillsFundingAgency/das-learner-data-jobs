@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.LearnerData.Application.OuterApi;
+namespace SFA.DAS.LearnerData.Application.OuterApi.Requests;
 
 public class PatchLearnerDataApprenticeshipIdRequest
 {

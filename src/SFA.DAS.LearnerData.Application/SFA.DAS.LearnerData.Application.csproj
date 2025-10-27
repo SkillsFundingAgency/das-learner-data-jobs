@@ -20,6 +20,7 @@
     <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="4.1.0" />
     <PackageReference Include="SFA.DAS.Configuration.AzureTableStorage" Version="17.1.113" />
     <PackageReference Include="SFA.DAS.Http" Version="3.2.69" />
+    <PackageReference Include="SFA.DAS.LearnerData.Messages" Version="0.1.17" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
 

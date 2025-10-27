@@ -348,6 +348,16 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# JetBrains Rider IDE
+.idea/
+*.sln.iml
+*.csproj.iml
+*.DotSettings.user
+rider.project.model.nuget.info
+rider.project.restore.info
+*.DotSettings
+
 /src/SFA.DAS.LearnerData.TestMessagePublisher/appsettings.development.json
 /src/SFA.DAS.LearnerData.Functions.ProcessLearners/local.settings.json
 *.ncrunchsolution

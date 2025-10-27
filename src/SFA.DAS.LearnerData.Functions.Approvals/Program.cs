@@ -16,6 +16,8 @@ var host = new HostBuilder()
     .ConfigureNServiceBus(AzureFunctionsQueueNames.ApprovalsQueue)
     .ConfigureServices((context, services) =>
     {
+        services.AddLearnerDataServices(context.Configuration);
+        
         services.AddDasLogging();
         
         var servicesRegistration = new ServicesRegistration(services, context.Configuration);

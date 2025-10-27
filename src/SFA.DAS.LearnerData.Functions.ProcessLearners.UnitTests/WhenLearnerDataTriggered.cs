@@ -3,7 +3,9 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.LearnerData.Application.OuterApi;
+using SFA.DAS.LearnerData.Application.OuterApi.Requests;
 using SFA.DAS.LearnerData.Events;
+using SFA.DAS.LearnerData.Functions.ProcessLearners.Functions;
 using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.LearnerData.Functions.ProcessLearners.UnitTests;

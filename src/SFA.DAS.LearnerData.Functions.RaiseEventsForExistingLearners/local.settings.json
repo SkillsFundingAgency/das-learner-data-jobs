@@ -1,0 +1,9 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "AzureWebJobsServiceBus:fullyQualifiedNamespace": "<from-secret>",
+    "ConfigNames": "SFA.DAS.LearnerData.Jobs",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
+  }
+}
