@@ -16,10 +16,8 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             HandleApprenticeshipStoppedEvent sut,
             ApprenticeshipStoppedEvent evt)
         {
-
             await sut.Handle(evt, null);
-            
-
+        
             api.Verify(
                 x => x.PatchApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
                     It.Is<ApprenticeshipStopRequest>(p=>p.ApprenticeshipId == evt.ApprenticeshipId && p.IsWithDrawnAtStartOfCourse == evt.IsWithDrawnAtStartOfCourse )), Times.Once);
@@ -33,10 +31,9 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
         {
             await sut.Handle(evt, null);
 
-        api.Verify(
-          x => x.PatchApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
+            api.Verify(
+             x => x.PatchApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
               It.Is<ApprenticeshipStopRequest>(p => p.ApprenticeshipId == 1 && p.IsWithDrawnAtStartOfCourse == evt.IsWithDrawnAtStartOfCourse)), Times.Never);
-
         }
 
         [Test, MoqAutoData]
@@ -50,18 +47,15 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             api.Verify(
               x => x.PatchApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
                   It.Is<ApprenticeshipStopRequest>(p => p.ApprenticeshipId == 0 && p.IsWithDrawnAtStartOfCourse == evt.IsWithDrawnAtStartOfCourse)), Times.Never);
-
         }
 
-
-    [Test, MoqAutoData]
+        [Test, MoqAutoData]
         public async Task And_Not_IsWithdrawn_From_Start_Course_Then_swallow_event(
             [Frozen] Mock<ILearnerDataJobsOuterApi> api,
             HandleApprenticeshipStoppedEvent sut,
             ApprenticeshipStoppedEvent evt)
         {
             evt.IsWithDrawnAtStartOfCourse = false;
-
             await sut.Handle(evt, null);
 
             api.Verify(
