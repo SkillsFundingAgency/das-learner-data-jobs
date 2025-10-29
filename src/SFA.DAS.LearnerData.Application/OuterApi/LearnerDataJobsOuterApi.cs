@@ -42,10 +42,7 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
 
     public async Task PatchApprenticeshipId(long providerId, long learnerDataId, PatchLearnerDataApprenticeshipIdRequest message)
     {
-        var requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"providers/{providerId}/learners/{learnerDataId}/apprenticeshipId")
-        {
-            Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
-        };
+        var requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"providers/{providerId}/learners/{learnerDataId}/apprenticeshipId");
 
         _logger.LogTrace("Sending ApprenticeshipId Patch to outer API");
         var response = await _httpClient.SendAsync(requestMessage);
