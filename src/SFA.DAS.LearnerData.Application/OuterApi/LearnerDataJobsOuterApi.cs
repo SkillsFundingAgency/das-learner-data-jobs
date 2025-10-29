@@ -27,7 +27,10 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
     public async Task AddOrUpdateLearner(LearnerDataRequest message)
     {
         var requestMessage = new HttpRequestMessage(HttpMethod.Put, $"providers/{message.UKPRN}/learners")
-        
+        {
+            Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
+        };
+
         _logger.LogTrace("Sending learner data to inner API");
         var response = await _httpClient.SendAsync(requestMessage);
 
