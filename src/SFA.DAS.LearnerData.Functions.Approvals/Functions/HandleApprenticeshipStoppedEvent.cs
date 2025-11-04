@@ -2,7 +2,7 @@
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.LearnerData.Application.OuterApi;
 
-namespace SFA.DAS.LearnersData.Functions.Approvals;
+namespace SFA.DAS.LearnerData.Functions.Approvals.Functions;
 public class HandleApprenticeshipStoppedEvent(ILearnerDataJobsOuterApi outerApi, ILogger<HandleApprenticeshipStoppedEvent> log) : IHandleMessages<ApprenticeshipStoppedEvent>
 {
     public async Task Handle(ApprenticeshipStoppedEvent message, IMessageHandlerContext context)

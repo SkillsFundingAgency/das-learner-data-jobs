@@ -3,7 +3,7 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.CommitmentsV2.Messages.Events;
 using SFA.DAS.LearnerData.Application.OuterApi;
-using SFA.DAS.LearnersData.Functions.Approvals;
+using SFA.DAS.LearnerData.Functions.Approvals.Functions;
 using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
