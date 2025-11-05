@@ -77,7 +77,7 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
 
     public async Task PatchApprenticeshipStopDateChanged(long providerId, long learnerDataId, ApprenticeshipStopRequest message)
     {
-        var requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"providers/{providerId}/learner/{learnerDataId}/apprenticeship-stop")
+        var requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"providers/{providerId}/learner/{learnerDataId}/apprenticeshipstopdatechanged")
         {
             Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
         };
@@ -87,8 +87,8 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
 
         if (!response.IsSuccessStatusCode)
         {
-            _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
-            throw new HttpRequestException("Unsuccessful status code returned when getting learner data", null, response.StatusCode);
+            _logger.LogError("Unsuccessful status code returned from API apprenticeshipstopdatechanged {0}", response.StatusCode);
+            throw new HttpRequestException("Unsuccessful status code returned when getting learner data from apprenticeshipstopdatechanged", null, response.StatusCode);
         }
     }
 
