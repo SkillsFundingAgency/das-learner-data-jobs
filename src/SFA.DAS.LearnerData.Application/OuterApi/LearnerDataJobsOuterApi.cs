@@ -58,9 +58,9 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         }
     }
 
-    public async Task PatchApprenticeshipStop(long providerId, long learnerDataId, ApprenticeshipStopRequest message)
+    public async Task ApprenticeshipStop(long providerId, long learnerDataId, ApprenticeshipStopRequest message)
     {
-        var requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"providers/{providerId}/learner/{learnerDataId}/apprenticeship-stop")
+        var requestMessage = new HttpRequestMessage(HttpMethod.Post, $"providers/{providerId}/learner/{learnerDataId}/apprenticeship-stop")
         {
             Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
         };
@@ -75,9 +75,9 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         }
     }
 
-    public async Task PatchApprenticeshipStopDateChanged(long providerId, long learnerDataId, ApprenticeshipStopRequest message)
+    public async Task ApprenticeshipStopDateChanged(long providerId, long learnerDataId, ApprenticeshipStopRequest message)
     {
-        var requestMessage = new HttpRequestMessage(HttpMethod.Patch, $"providers/{providerId}/learner/{learnerDataId}/apprenticeshipstopdatechanged")
+        var requestMessage = new HttpRequestMessage(HttpMethod.Post, $"providers/{providerId}/learner/{learnerDataId}/apprenticeshipstopdatechanged")
         {
             Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
         };

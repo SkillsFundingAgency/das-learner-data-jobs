@@ -19,7 +19,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             await sut.Handle(evt, null);
         
             api.Verify(
-                x => x.PatchApprenticeshipStopDateChanged(evt.ProviderId, (long)evt.LearnerDataId,
+                x => x.ApprenticeshipStopDateChanged(evt.ProviderId, (long)evt.LearnerDataId,
                     It.Is<ApprenticeshipStopRequest>(p=>p.ApprenticeshipId == evt.ApprenticeshipId && p.IsWithDrawnAtStartOfCourse == evt.IsWithDrawnAtStartOfCourse )), Times.Once);
         }
 
@@ -32,7 +32,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             await sut.Handle(evt, null);
 
             api.Verify(
-             x => x.PatchApprenticeshipStopDateChanged(evt.ProviderId, (long)evt.LearnerDataId,
+             x => x.ApprenticeshipStopDateChanged(evt.ProviderId, (long)evt.LearnerDataId,
               It.Is<ApprenticeshipStopRequest>(p => p.ApprenticeshipId == evt.ApprenticeshipId && p.IsWithDrawnAtStartOfCourse == evt.IsWithDrawnAtStartOfCourse)), Times.Once);
         }
 
@@ -45,7 +45,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             await sut.Handle(evt, null);
 
             api.Verify(
-              x => x.PatchApprenticeshipStopDateChanged(evt.ProviderId, (long)evt.LearnerDataId,
+              x => x.ApprenticeshipStopDateChanged(evt.ProviderId, (long)evt.LearnerDataId,
                   It.Is<ApprenticeshipStopRequest>(p => p.ApprenticeshipId == evt.ApprenticeshipId && p.IsWithDrawnAtStartOfCourse == evt.IsWithDrawnAtStartOfCourse)), Times.Once);
         }
 
@@ -60,7 +60,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             await sut.Handle(evt, null);
 
             api.Verify(
-                x => x.PatchApprenticeshipStopDateChanged(evt.ProviderId, evt.LearnerDataId.Value,
+                x => x.ApprenticeshipStopDateChanged(evt.ProviderId, evt.LearnerDataId.Value,
                     It.Is<ApprenticeshipStopRequest>(p => p.ApprenticeshipId == 0 && p.IsWithDrawnAtStartOfCourse == false)), Times.Once);
         }
 }

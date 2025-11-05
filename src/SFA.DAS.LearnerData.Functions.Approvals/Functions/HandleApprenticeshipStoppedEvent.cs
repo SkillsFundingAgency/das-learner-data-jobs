@@ -24,7 +24,7 @@ public class HandleApprenticeshipStoppedEvent(ILearnerDataJobsOuterApi outerApi,
             return;
         }
         log.LogInformation("NServiceBus  sending ApprenticeshipStoppedRequest");
-        await outerApi.PatchApprenticeshipStop(message.ProviderId, (long)message.LearnerDataId,
+        await outerApi.ApprenticeshipStop(message.ProviderId, (long)message.LearnerDataId,
                 new ApprenticeshipStopRequest()
                 {
                     IsWithDrawnAtStartOfCourse = message.IsWithDrawnAtStartOfCourse,

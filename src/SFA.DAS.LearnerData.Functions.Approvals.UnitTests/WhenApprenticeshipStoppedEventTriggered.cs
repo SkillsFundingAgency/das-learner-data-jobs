@@ -19,7 +19,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             await sut.Handle(evt, null);
         
             api.Verify(
-                x => x.PatchApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
+                x => x.ApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
                     It.Is<ApprenticeshipStopRequest>(p=>p.ApprenticeshipId == evt.ApprenticeshipId && p.IsWithDrawnAtStartOfCourse == evt.IsWithDrawnAtStartOfCourse )), Times.Once);
         }
 
@@ -32,7 +32,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             await sut.Handle(evt, null);
 
             api.Verify(
-             x => x.PatchApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
+             x => x.ApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
               It.Is<ApprenticeshipStopRequest>(p => p.ApprenticeshipId == 1 && p.IsWithDrawnAtStartOfCourse == evt.IsWithDrawnAtStartOfCourse)), Times.Never);
         }
 
@@ -45,7 +45,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             await sut.Handle(evt, null);
 
             api.Verify(
-              x => x.PatchApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
+              x => x.ApprenticeshipStop(evt.ProviderId, (long)evt.LearnerDataId,
                   It.Is<ApprenticeshipStopRequest>(p => p.ApprenticeshipId == 0 && p.IsWithDrawnAtStartOfCourse == evt.IsWithDrawnAtStartOfCourse)), Times.Never);
         }
 
@@ -59,7 +59,7 @@ namespace SFA.DAS.LearnerData.Functions.Approvals.UnitTests;
             await sut.Handle(evt, null);
 
             api.Verify(
-                x => x.PatchApprenticeshipStop(evt.ProviderId, evt.LearnerDataId.Value,
+                x => x.ApprenticeshipStop(evt.ProviderId, evt.LearnerDataId.Value,
                     It.Is<ApprenticeshipStopRequest>(p => p.ApprenticeshipId == 1 && p.IsWithDrawnAtStartOfCourse == false)), Times.Never);
         }
 }
