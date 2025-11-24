@@ -1,10 +1,10 @@
-﻿using System.Text;
-using System.Text.Json;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SFA.DAS.LearnerData.Application.OuterApi.Requests;
 using SFA.DAS.LearnerData.Application.OuterApi.Responses;
+using System.Text;
+using System.Text.Json;
 
 namespace SFA.DAS.LearnerData.Application.OuterApi;
 
@@ -30,6 +30,7 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         {
             Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
         };
+
         _logger.LogTrace("Sending learner data to inner API");
         var response = await _httpClient.SendAsync(requestMessage);
 
@@ -46,6 +47,7 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         {
             Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
         };
+
         _logger.LogTrace("Sending ApprenticeshipId Patch to outer API");
         var response = await _httpClient.SendAsync(requestMessage);
 
@@ -53,6 +55,40 @@ public class LearnerDataJobsOuterApi : ILearnerDataJobsOuterApi
         {
             _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
             throw new HttpRequestException("Unsuccessful status code returned when updating ApprenticeshipId on learner data record", null, response.StatusCode);
+        }
+    }
+
+    public async Task ApprenticeshipStop(long providerId, long learnerDataId, ApprenticeshipStopRequest message)
+    {
+        var requestMessage = new HttpRequestMessage(HttpMethod.Post, $"providers/{providerId}/learner/{learnerDataId}/apprenticeship-stop")
+        {
+            Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
+        };
+
+        _logger.LogTrace("sening learnder DataId to patch to outer API");
+        var response = await _httpClient.SendAsync(requestMessage);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Unsuccessful status code returned from API {0}", response.StatusCode);
+            throw new HttpRequestException("Unsuccessful status code returned when getting learner data", null, response.StatusCode);
+        }
+    }
+
+    public async Task ApprenticeshipStopDateChanged(long providerId, long learnerDataId, ApprenticeshipStopRequest message)
+    {
+        var requestMessage = new HttpRequestMessage(HttpMethod.Post, $"providers/{providerId}/learner/{learnerDataId}/apprenticeshipstopdatechanged")
+        {
+            Content = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json")
+        };
+
+        _logger.LogTrace("sening learnder DataId to patch to outer API");
+        var response = await _httpClient.SendAsync(requestMessage);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Unsuccessful status code returned from API apprenticeshipstopdatechanged {0}", response.StatusCode);
+            throw new HttpRequestException("Unsuccessful status code returned when getting learner data from apprenticeshipstopdatechanged", null, response.StatusCode);
         }
     }
 
