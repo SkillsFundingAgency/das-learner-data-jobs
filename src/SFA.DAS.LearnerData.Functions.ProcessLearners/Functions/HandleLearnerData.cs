@@ -44,9 +44,4 @@ public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<H
             return message.LarsCode;
         }
     }
-
-    private string GetLarsCode()
-    {
-        throw new NotImplementedException();
-    }
 }
