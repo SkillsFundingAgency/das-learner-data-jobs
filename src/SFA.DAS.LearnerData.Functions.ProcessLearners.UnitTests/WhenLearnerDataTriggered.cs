@@ -29,4 +29,24 @@ public class WhenLearnerDataTriggered
 
         request.Should().BeEquivalentTo(evt);
     }
+
+    [Test, MoqAutoData]
+    public async Task Then_notify_apim_using_StandardCode_For_LarsCode(
+    [Frozen] Mock<ILearnerDataJobsOuterApi> api,
+    HandleLearnerDataEvent sut,
+    LearnerDataEvent evt)
+    {
+        var request = new LearnerDataRequest();
+        evt.LarsCode = null;
+
+        api.Setup(x => x.AddOrUpdateLearner(It.IsAny<LearnerDataRequest>())).Callback((LearnerDataRequest p) =>
+        {
+            request = p;
+        });
+
+        await sut.Handle(evt, null);
+
+        request.LarsCode.Should().Be(evt.StandardCode.ToString());
+    }
+
 }
