@@ -26,7 +26,6 @@ public class LearnerDataApiResponse
     public string AgreementId { get; set; } = string.Empty;
     public bool IsFlexiJob { get; set; }
     public int PlannedOTJTrainingHours { get; set; }
-    public int StandardCode { get; set; }
     public string ConsumerReference { get; set; } = string.Empty;
     public DateTime ReceivedDate { get; set; }
     public DateTime CreatedDate { get; set; }
