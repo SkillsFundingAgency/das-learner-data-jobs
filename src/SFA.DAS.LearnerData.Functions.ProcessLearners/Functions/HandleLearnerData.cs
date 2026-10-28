@@ -26,7 +26,8 @@ public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<H
             AgreementId = message.AgreementId,
             IsFlexiJob = message.IsFlexiJob,
             PlannedOTJTrainingHours = message.PlannedOTJTrainingHours,
-            LarsCode = message.LarsCode, 
+            StandardCode = message.StandardCode,
+            LarsCode = DetermineLarsCode(), 
             ConsumerReference = message.ConsumerReference,
             CorrelationId = message.CorrelationId,
             ReceivedDate = message.ReceivedDate,
@@ -34,6 +35,13 @@ public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<H
         };
 
         await outerApi.AddOrUpdateLearner(request);
-        log.LogTrace("NServiceBus sent LearnerDataRequest");       
+        log.LogTrace("NServiceBus sent LearnerDataRequest");
+
+        string DetermineLarsCode()
+        {
+            if (string.IsNullOrEmpty(message.LarsCode))
+                return message.StandardCode.ToString();
+            return message.LarsCode;
+        }
     }
 }
