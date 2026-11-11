@@ -29,6 +29,7 @@ public class HandleLearnerDataEvent(ILearnerDataJobsOuterApi outerApi, ILogger<H
             StandardCode = message.StandardCode,
             LarsCode = DetermineLarsCode(), 
             ConsumerReference = message.ConsumerReference,
+            OnServicePayments = message.OnServicePayments,
             CorrelationId = message.CorrelationId,
             ReceivedDate = message.ReceivedDate,
             AcademicYear = message.AcademicYear
