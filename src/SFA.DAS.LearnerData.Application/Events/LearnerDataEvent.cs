@@ -19,6 +19,7 @@ public class LearnerDataEvent
     public int StandardCode { get; set; }
     public string LarsCode { get; set; }
     public string ConsumerReference { get; set; }
+    public bool? OnServicePayments { get; set; }
     public Guid CorrelationId { get; set; }
     public DateTime ReceivedDate { get; set; }
     public int AcademicYear { get; set; }
